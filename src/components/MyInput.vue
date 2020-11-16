@@ -1,13 +1,24 @@
 <template>
   <div>
-    <input type="text" :placeholder="tips" />
+    <input type="text" :placeholder="tips" v-model="value" />
+    <button @click="sendValue">发送数据</button>
   </div>
 </template>
 
 <script>
 export default {
-  //子组件使用props保存数据
+  data() {
+    return {
+      value: "",
+    };
+  },
+  //子组件使用props保存数据g
   props: ["tips"],
+  methods: {
+    sendValue() {
+      this.$emit("send", this.value);
+    },
+  },
 };
 </script>
 
