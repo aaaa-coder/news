@@ -1,11 +1,14 @@
 <template>
   <div>
-    <input type="text" placeholder="请输入内容" />
+    <input type="text" :placeholder="tips" />
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  //子组件使用props保存数据
+  props: ["tips"],
+};
 </script>
 
 <style>
