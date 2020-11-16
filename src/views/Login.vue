@@ -5,6 +5,7 @@
     <MyInput tips="请输入用户名" @send="showValue" />
     <MyInput tips="请输入账号" @send="showValue" />
     <MyInput tips="请输入密码" @send="showValue" />
+    <span class="iconfont icondianzan"></span>
   </div>
 </template>
 
