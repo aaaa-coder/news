@@ -24,15 +24,17 @@
     />
 
     <!-- 登录按钮 -->
-    <button class="btn">登录</button>
+    <AuthBtn btnText="登录" />
   </div>
 </template>
 
 <script>
 import AuthInput from "../components/AuthInput";
+import AuthBtn from "../components/AuthBtn";
 export default {
   components: {
     AuthInput,
+    AuthBtn,
   },
 };
 </script>
@@ -51,17 +53,6 @@ export default {
       font-size: 126 /360 * 100vw;
       color: #d81e06;
     }
-  }
-  // 登录按钮样式
-  .btn {
-    width: 100%;
-    height: 48 /360 * 100vw;
-    margin-top: 50 /360 * 100vw;
-    border: 0;
-    color: #fff;
-    font-size: 20 /360 * 100vw;
-    background-color: #cc3300;
-    border-radius: 24 /360 * 100vw;
   }
 }
 </style>
