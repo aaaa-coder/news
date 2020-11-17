@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="myinput">
     <input type="text" :placeholder="tips" v-model="value" />
     <button @click="sendValue">发送数据</button>
+    <br />
+    <span class="iconfont icondianzan"></span>
   </div>
 </template>
 
@@ -12,7 +14,6 @@ export default {
       value: "",
     };
   },
-  //子组件使用props保存数据g
   props: ["tips"],
   methods: {
     sendValue() {
@@ -22,5 +23,5 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 </style>

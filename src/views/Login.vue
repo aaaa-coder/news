@@ -1,27 +1,61 @@
 <template>
-  <div>
-    <h1>登录页面</h1>
-    <!-- 子组件定义props定义了什么变量,父组件就用什么变量传递 -->
-    <MyInput tips="请输入用户名" @send="showValue" />
-    <MyInput tips="请输入账号" @send="showValue" />
-    <MyInput tips="请输入密码" @send="showValue" />
-    <span class="iconfont icondianzan"></span>
+  <div class="container">
+    <div class="closeBtn">
+      <i class="iconfont iconicon-test"></i>
+    </div>
+    <div class="logoWrapper">
+      <i class="iconfont iconnew"></i>
+    </div>
+    <div class="inputWrapper">
+      <input type="text" />
+    </div>
+    <div class="inputWrapper">
+      <input type="text" />
+    </div>
+    <button class="btn">登录</button>
   </div>
 </template>
 
 <script>
-import MyInput from "../components/MyInput";
-export default {
-  components: {
-    MyInput,
-  },
-  methods: {
-    showValue(val) {
-      console.log("收到子组件的数据" + val);
-    },
-  },
-};
+export default {};
 </script>
 
-<style>
+<style lang="less">
+.container {
+  padding: 20 /360 * 100vw;
+  // background-color: #f2f2f2;
+
+  .iconicon-test {
+    font-size: 27 /360 * 100vw;
+  }
+  .logoWrapper {
+    text-align: center;
+    .iconnew {
+      font-size: 126 /360 * 100vw;
+      color: #d81e06;
+    }
+  }
+
+  .inputWrapper {
+    input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      line-height: 38 /360 * 100vw;
+      margin-top: 10 /360 * 100vw;
+      border-bottom: 1px solid #333;
+      font-size: 18 /360 * 100vw;
+    }
+  }
+
+  .btn {
+    width: 100%;
+    height: 48 /360 * 100vw;
+    margin-top: 30 /360 * 100vw;
+    border: 0;
+    color: #fff;
+    background-color: #cc3300;
+    border-radius: 24 /360 * 100vw;
+  }
+}
 </style>
