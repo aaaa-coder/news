@@ -9,9 +9,9 @@
       <i class="iconfont iconnew"></i>
     </div>
     <!-- 用户名 -->
-    <AuthInput placeholder="请输入用户名/账号" type="text" />
+    <AuthInput placeholder="请输入用户名/账号" type="text" :rule="/^.{6,}$/" />
     <!-- 密码 -->
-    <AuthInput placeholder="请输入密码" type="password" />
+    <AuthInput placeholder="请输入密码" type="password" :rule="/^.{6,}$/" />
 
     <!-- 登录按钮 -->
     <button class="btn">登录</button>
