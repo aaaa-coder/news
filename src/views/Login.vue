@@ -14,15 +14,17 @@
     <AuthInput
       placeholder="请输入用户名/账号"
       type="text"
-      :rule="/^.{6,}$/"
+      :rule="/^.{5,11}$/"
       errMsg="请输入正确的用户名"
+      @setValue="setUsername"
     />
     <!-- 密码 -->
     <AuthInput
       placeholder="请输入密码"
       type="password"
-      :rule="/^.{6,12}$/"
+      :rule="/^.{3,12}$/"
       errMsg="请输入正确密码"
+      @setValue="setPassword"
     />
 
     <!-- 登录按钮 -->
@@ -35,6 +37,12 @@ import AuthInput from "../components/AuthInput";
 import AuthBtn from "../components/AuthBtn";
 import CircleImg from "../components/CircleImg";
 export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
   components: {
     AuthInput,
     AuthBtn,
@@ -42,16 +50,27 @@ export default {
   },
 
   methods: {
+    setUsername(newValue) {
+      this.username = newValue;
+    },
+    setPassword(newValue) {
+      this.password = newValue;
+    },
     login() {
       this.$axios({
         method: "post",
         url: "http://157.122.54.189:9083/login",
         data: {
-          username: 100862,
-          password: 123,
+          username: this.username,
+          password: this.password,
         },
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
+        if (res.status === 200) {
+          this.$toast({
+            message: res.data.message,
+          });
+        }
       });
     },
   },
