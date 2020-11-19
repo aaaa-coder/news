@@ -1,7 +1,7 @@
 <template>
   <div class="inputWrapper">
     <input
-      :class="{ error: !isOk }"
+      :class="[value.length >= 0 ? { error: !isOk } : '']"
       :placeholder="placeholder"
       :type="type"
       v-model="value"
@@ -20,19 +20,24 @@ export default {
   },
   props: ["placeholder", "type", "rule", "errMsg"],
   watch: {
+    //监听value变化
     value(newValue) {
       if (this.rule.test(newValue)) {
         this.isOk = true;
       } else {
-        console.log(this.errMsg);
+        // console.log(this.errMsg);
         this.isOk = false;
       }
+      //变化后，将指传递给父组件
+      this.$emit("setValue", newValue);
     },
   },
   methods: {
     showErrMsg() {
       if (!this.isOk) {
-        alert(this.errMsg);
+        this.$toast({
+          message: this.errMsg,
+        });
       }
     },
   },
@@ -52,9 +57,6 @@ export default {
   }
   .error {
     border-color: #a00;
-  }
-  .reset {
-    border-color: #333;
   }
 }
 </style>

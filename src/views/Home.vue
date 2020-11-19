@@ -1,7 +1,8 @@
 <template>
   <div>
     <div>这是首页</div>
-    <router-link to="/login">跳往登录页面</router-link>
+    <router-link to="/login">跳往登录页面</router-link><br />
+    <router-link to="/register">前往注册页面</router-link>
   </div>
 </template>
 
@@ -9,5 +10,5 @@
 export default {};
 </script>
 
-<style>
+<style lang="less" scoped>
 </style>

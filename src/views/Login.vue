@@ -8,6 +8,8 @@
     <div class="logoWrapper">
       <i class="iconfont iconnew"></i>
     </div>
+
+    <CircleImg />
     <!-- 用户名 -->
     <AuthInput
       placeholder="请输入用户名/账号"
@@ -24,22 +26,39 @@
     />
 
     <!-- 登录按钮 -->
-    <AuthBtn btnText="登录" />
+    <AuthBtn btnText="登录" @click.native="login" />
   </div>
 </template>
 
 <script>
 import AuthInput from "../components/AuthInput";
 import AuthBtn from "../components/AuthBtn";
+import CircleImg from "../components/CircleImg";
 export default {
   components: {
     AuthInput,
     AuthBtn,
+    CircleImg,
+  },
+
+  methods: {
+    login() {
+      this.$axios({
+        method: "post",
+        url: "http://157.122.54.189:9083/login",
+        data: {
+          username: 100862,
+          password: 123,
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    },
   },
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .container {
   padding: 20 /360 * 100vw;
   // 登录页面关闭按钮
