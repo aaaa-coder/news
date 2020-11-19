@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- 头部的阴影部分 -->
-    <div class="topWrapper"></div>
+    <UserTop />
     <!-- 用户信息模块 -->
     <div class="userInfo">
       <!-- 用户信息左侧 -->
@@ -10,8 +10,14 @@
       </div>
       <!-- 用户中间部分信息 -->
       <div class="userInfo_center">
-        <i class="iconfont iconxingbienan"></i>
-        <span class="user_nickname">火星网友</span>
+        <i
+          :class="{
+            iconfont: true,
+            iconxingbienan: isMan,
+            iconxingbienv: !isMan,
+          }"
+        ></i>
+        <span class="user_nickname">{{ nickname }}</span>
         <div class="user_birthday">2019-10-10</div>
       </div>
       <!-- 用户信息中的右边箭头 -->
@@ -32,10 +38,19 @@
 <script>
 import CircleImg from "../components/CircleImg";
 import AuthOpeartion from "../components/AuthOpeartion";
+import UserTop from "../components/UserTop";
 export default {
+  data() {
+    return {
+      nickname: "",
+      gender: "",
+      isMan: false,
+    };
+  },
   components: {
     CircleImg,
     AuthOpeartion,
+    UserTop,
   },
   mounted() {
     const id = localStorage.getItem("userId");
@@ -48,18 +63,23 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     }).then((res) => {
-      console.log(res);
+      const { data } = res.data;
+      // console.log(res);
+      console.log(data);
+      // console.log(data.nickname);
+      this.nickname = data.nickname;
+      this.gender = data.gender;
+      if (data.gender === 1) {
+        this.isMan = false;
+      } else {
+        this.isMan = true;
+      }
     });
   },
 };
 </script>
 
 <style lang="less" scoped>
-.topWrapper {
-  width: 100%;
-  height: 30 /360 * 100vw;
-  background-color: #757575;
-}
 .userInfo {
   display: flex;
   justify-content: space-between;
@@ -71,10 +91,14 @@ export default {
     // height: 50 /360 * 100vw;
     line-height: 25 /360 * 100vw;
     margin-right: 90 /360 * 100vw;
-    .iconxingbienan {
+    .iconxingbienan,
+    .iconxingbienv {
       margin-right: 10 /360 * 100vw;
       margin-bottom: 10 /360 * 100vw;
       color: skyblue;
+    }
+    .iconxingbienv {
+      color: #eae;
     }
     .user_birthday {
       color: #a5a2a2;
