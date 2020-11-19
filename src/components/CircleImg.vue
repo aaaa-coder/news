@@ -12,13 +12,12 @@ export default {};
 
 <style lang="less" scoped>
 .container {
-  display: flex;
-  justify-content: center;
-  margin-top: -40 /360 * 100vw;
+  width: 80 /360 * 100vw;
+  padding: 30 /360 * 100vw;
 }
 .userImg {
-  width: 100 /360 * 100vw;
-  height: 100 /360 * 100vw;
+  width: 80 /360 * 100vw;
+  height: 80 /360 * 100vw;
   border: 1px solid #ccc;
   border-radius: 50%;
   overflow: hidden;
