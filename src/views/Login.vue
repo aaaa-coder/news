@@ -67,9 +67,13 @@ export default {
       }).then((res) => {
         // console.log(res);
         if (res.status === 200) {
-          this.$toast({
-            message: res.data.message,
-          });
+          const { data } = res.data;
+          this.$toast(data.message);
+          console.log(res);
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("userId", data.user.id);
+          // this.$router.push("../views/Personal.vue");
+          this.$router.push("/personal");
         }
       });
     },

@@ -37,6 +37,20 @@ export default {
     CircleImg,
     AuthOpeartion,
   },
+  mounted() {
+    const id = localStorage.getItem("userId");
+    this.$axios({
+      method: "get",
+      url: `http://157.122.54.189:9083/user/${id}`,
+      //问号的形式才能用这个，:是需要直接拼接
+      // params: { id },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    }).then((res) => {
+      console.log(res);
+    });
+  },
 };
 </script>
 
@@ -56,7 +70,7 @@ export default {
   .userInfo_center {
     // height: 50 /360 * 100vw;
     line-height: 25 /360 * 100vw;
-    margin-right: 100 /360 * 100vw;
+    margin-right: 90 /360 * 100vw;
     .iconxingbienan {
       margin-right: 10 /360 * 100vw;
       margin-bottom: 10 /360 * 100vw;
