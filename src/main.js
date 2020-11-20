@@ -16,3 +16,17 @@ new Vue({
   router,
   render: function (h) { return h(App) }
 }).$mount('#app')
+
+router.beforeEach((to, from, next) => {
+  // console.log(to);
+  const hasToken = localStorage.getItem('token');
+  if (to.path === "/profile") {
+    if (hasToken) {
+      router.push('/profile');
+    }
+    else {
+      router.push('/login')
+    }
+  }
+  next();
+})
