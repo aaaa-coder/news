@@ -1,10 +1,21 @@
 <template>
   <div class="container">
     <div class="userInfo">
-      <CircleImg />
+      <div v-if="userInfo.head_img">
+        <img src="'http://157.122.54.189:9083'+head_img" />
+      </div>
+      <div v-else>
+        <CircleImg />
+      </div>
       <div class="userWrapper">
-        <i class="iconfont iconxingbienan"></i>
-        <span>火星网友</span>
+        <i
+          class="iconfont"
+          :class="{
+            iconxingbienan: (gender = 1),
+            iconxingbienv: (gender = 0),
+          }"
+        ></i>
+        <span>{{ userInfo.nickname }}</span>
         <div class="userBirthday">1314-5-20</div>
       </div>
       <i class="iconfont iconjiantou1"></i>
@@ -26,10 +37,39 @@ import ProfileBar from "@/components/ProfileBar";
 import AuthBtn from "@/components/AuthBtn";
 
 export default {
+  data() {
+    return {
+      userInfo: {},
+    };
+  },
   components: {
     CircleImg,
     ProfileBar,
     AuthBtn,
+  },
+  methods: {
+    getUserInfo() {
+      this.$axios({
+        method: "get",
+        url:
+          "http://157.122.54.189:9083/user/" + localStorage.getItem("userId"),
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }).then((res) => {
+        // console.log(res);
+        if (res.status === 200) {
+          const { data, message } = res.data;
+          if (message == "获取成功") {
+            this.userInfo = data;
+            console.log(this.userInfo);
+          }
+        }
+      });
+    },
+  },
+  mounted() {
+    this.getUserInfo();
   },
 };
 </script>
@@ -44,8 +84,15 @@ export default {
     flex: 1;
     margin-left: 20 /360 * 100vw;
     line-height: 25 /360 * 100vw;
+    .iconfont {
+      margin: 5 /360 * 100vw;
+      margin-left: 0;
+    }
     .iconxingbienan {
       color: skyblue;
+    }
+    .iconxingbienv {
+      color: #ebe;
     }
     .userBirthday {
       font-size: 14px;
