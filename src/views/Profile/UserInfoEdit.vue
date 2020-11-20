@@ -1,9 +1,6 @@
 <template>
   <div class="container">
-    <div class="userInfo">
-      <i class="iconfont iconjiantou2"></i>
-      <h4>编辑信息</h4>
-    </div>
+    <ProfileTitle title="编辑资料" />
     <CircleImg class="userImg" />
     <div class="userEdit">
       <ProfileBar title="昵称" desc="火星网友" />
@@ -16,27 +13,17 @@
 <script>
 import CircleImg from "@/components/CircleImg";
 import ProfileBar from "@/components/ProfileBar";
+import ProfileTitle from "@/components/ProfileTitle";
 export default {
   components: {
     CircleImg,
     ProfileBar,
+    ProfileTitle,
   },
 };
 </script>
 
 <style lang="less" scoped>
-.userInfo {
-  display: flex;
-  align-items: center;
-  //   justify-content: center;
-  padding: 20 /360 * 100vw;
-  .iconjiantou2 {
-    flex: 1;
-  }
-  h4 {
-    margin-right: 120 /360 * 100vw;
-  }
-}
 .userImg {
   margin: 20 /360 * 100vw auto;
 }

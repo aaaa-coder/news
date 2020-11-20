@@ -13,8 +13,8 @@
         <i
           :class="{
             iconfont: true,
-            iconxingbienan: isMan,
-            iconxingbienv: !isMan,
+            iconxingbienan: !isMan,
+            iconxingbienv: isMan,
           }"
         ></i>
         <span class="user_nickname">{{ nickname }}</span>
@@ -27,7 +27,11 @@
     </div>
     <!-- 下面的内容部分 -->
     <div class="content">
-      <AuthOpeartion title="我的关注" content="关注的内容" />
+      <AuthOpeartion
+        title="我的关注"
+        content="关注的内容"
+        @click.native="toFocus"
+      />
       <AuthOpeartion title="我的跟帖" content="跟帖/回复" />
       <AuthOpeartion title="我的收藏" content="文章/视频" />
       <AuthOpeartion title="设置" />
@@ -56,6 +60,7 @@ export default {
     UserTop,
   },
   methods: {
+    //
     toUserEdit() {
       this.$router.push({
         name: "userEdit",
@@ -68,7 +73,9 @@ export default {
         },
       });
     },
-
+    toFocus() {
+      this.$router.push("/userFocus");
+    },
     getUserInfo() {
       const id = localStorage.getItem("userId");
       this.$axios({

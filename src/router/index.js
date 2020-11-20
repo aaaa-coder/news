@@ -7,6 +7,8 @@ import Personal from '../views/Personal.vue'
 import UserEdit from "../views/UserEdit.vue"
 import ProfileIndex from "../views/Profile/Index.vue"
 import UserInfoEdit from "../views/Profile/UserInfoEdit.vue"
+import UserFocus from "../views/Profile/UserFocus.vue"
+
 
 Vue.use(VueRouter)
 
@@ -39,6 +41,9 @@ const routes = [
   {
     path: '/userInfoEdit',
     component: UserInfoEdit,
+  }, {
+    path: '/userFocus',
+    component: UserFocus
   }
 ]
 
@@ -47,7 +52,7 @@ const router = new VueRouter({
 })
 router.beforeEach((to, from, next) => {
   const hasToken = localStorage.getItem('token');
-  if (to.path == '/profile') {
+  if (to.path == '/personal') {
     if (hasToken) {
       return next();
     } else {
