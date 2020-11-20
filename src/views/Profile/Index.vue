@@ -9,14 +9,27 @@
       </div>
       <i class="iconfont iconjiantou1"></i>
     </div>
+
+    <div class="useContent">
+      <ProfileBar title="我的关注" desc="关注的目标" />
+      <ProfileBar title="我的跟帖" desc="跟帖/回复" />
+      <ProfileBar title="我的收藏" desc="文章/视频" />
+      <ProfileBar title="设置" />
+      <AuthBtn btnText="退出" class="exit" />
+    </div>
   </div>
 </template>
 
 <script>
 import CircleImg from "@/components/CircleImg";
+import ProfileBar from "@/components/ProfileBar";
+import AuthBtn from "@/components/AuthBtn";
+
 export default {
   components: {
     CircleImg,
+    ProfileBar,
+    AuthBtn,
   },
 };
 </script>
@@ -43,5 +56,8 @@ export default {
       font-size: 17 /360 * 100vw;
     }
   }
+}
+.exit {
+  margin-top: 150 /360 * 100vw;
 }
 </style>
