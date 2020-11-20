@@ -41,6 +41,7 @@ export default {
     return {
       username: "",
       password: "",
+      nickname: "",
     };
   },
   components: {
@@ -67,9 +68,9 @@ export default {
       }).then((res) => {
         // console.log(res);
         if (res.status === 200) {
-          const { data } = res.data;
-          this.$toast(data.message);
-          console.log(res);
+          const { data, message } = res.data;
+          this.$toast(message);
+          // console.log(res);
           localStorage.setItem("token", data.token);
           localStorage.setItem("userId", data.user.id);
           // this.$router.push("../views/Personal.vue");

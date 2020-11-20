@@ -22,7 +22,7 @@
       </div>
       <!-- 用户信息中的右边箭头 -->
       <div class="userInfo_right">
-        <i class="iconfont iconjiantou1"></i>
+        <i class="iconfont iconjiantou1" @click="toUserEdit"></i>
       </div>
     </div>
     <!-- 下面的内容部分 -->
@@ -44,7 +44,10 @@ export default {
     return {
       nickname: "",
       gender: "",
-      isMan: false,
+      username: "",
+      password: "",
+      isMan: true,
+      userImg: "",
     };
   },
   components: {
@@ -52,29 +55,50 @@ export default {
     AuthOpeartion,
     UserTop,
   },
+  methods: {
+    toUserEdit() {
+      this.$router.push({
+        name: "userEdit",
+        query: {
+          nickname: this.nickname,
+          gender: this.gender,
+          username: this.username,
+          password: this.password,
+          userImg: this.userImg,
+        },
+      });
+    },
+
+    getUserInfo() {
+      const id = localStorage.getItem("userId");
+      this.$axios({
+        method: "get",
+        url: `http://157.122.54.189:9083/user/${id}`,
+        //问号的形式才能用这个，:是需要直接拼接
+        // params: { id },
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }).then((res) => {
+        if (res.status === 200) {
+          const { data } = res.data;
+          // console.log(data);
+          this.nickname = data.nickname;
+          this.gender = data.gender;
+          this.password = data.password;
+          this.username = data.username;
+          // console.log(this.nickname, this.gender, this.password, this.username);
+          if (data.gender === 1) {
+            this.isMan = false;
+          } else {
+            this.isMan = true;
+          }
+        }
+      });
+    },
+  },
   mounted() {
-    const id = localStorage.getItem("userId");
-    this.$axios({
-      method: "get",
-      url: `http://157.122.54.189:9083/user/${id}`,
-      //问号的形式才能用这个，:是需要直接拼接
-      // params: { id },
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    }).then((res) => {
-      const { data } = res.data;
-      // console.log(res);
-      console.log(data);
-      // console.log(data.nickname);
-      this.nickname = data.nickname;
-      this.gender = data.gender;
-      if (data.gender === 1) {
-        this.isMan = false;
-      } else {
-        this.isMan = true;
-      }
-    });
+    this.getUserInfo();
   },
 };
 </script>

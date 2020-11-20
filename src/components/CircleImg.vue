@@ -13,7 +13,6 @@ export default {};
 <style lang="less" scoped>
 .container {
   width: 80 /360 * 100vw;
-  padding: 30 /360 * 100vw;
 }
 .userImg {
   width: 80 /360 * 100vw;
