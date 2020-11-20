@@ -6,6 +6,7 @@ import Register from '../views/Register.vue'
 import Personal from '../views/Personal.vue'
 import UserEdit from "../views/UserEdit.vue"
 import ProfileIndex from "../views/Profile/Index.vue"
+import UserInfoEdit from "../views/Profile/UserInfoEdit.vue"
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,10 @@ const routes = [
     path: '/profile',
     component: ProfileIndex,
   },
+  {
+    path: '/userInfoEdit',
+    component: UserInfoEdit,
+  }
 ]
 
 const router = new VueRouter({
