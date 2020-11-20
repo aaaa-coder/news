@@ -22,10 +22,10 @@ router.beforeEach((to, from, next) => {
   const hasToken = localStorage.getItem('token');
   if (to.path === "/profile") {
     if (hasToken) {
-      router.push('/profile');
+      return router.push('/profile');
     }
     else {
-      router.push('/login')
+      return router.push('/login').catch(res => { });
     }
   }
   next();
