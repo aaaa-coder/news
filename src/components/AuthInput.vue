@@ -1,7 +1,7 @@
 <template>
   <div class="inputWrapper">
     <input
-      :class="[value.length >= 0 ? { error: !isOk } : '']"
+      :class="{ error: !isOk }"
       :placeholder="placeholder"
       :type="type"
       v-model="value"

@@ -41,7 +41,6 @@ export default {
     return {
       username: "",
       password: "",
-      nickname: "",
     };
   },
   components: {
@@ -58,25 +57,32 @@ export default {
       this.password = newValue;
     },
     login() {
-      this.$axios({
-        method: "post",
-        url: "http://157.122.54.189:9083/login",
-        data: {
-          username: this.username,
-          password: this.password,
-        },
-      }).then((res) => {
-        // console.log(res);
-        if (res.status === 200) {
-          const { data, message } = res.data;
-          this.$toast(message);
-          // console.log(res);
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("userId", data.user.id);
-          // this.$router.push("../views/Personal.vue");
-          this.$router.push("/profile");
-        }
-      });
+      if (this.username && this.password) {
+        this.$axios({
+          method: "post",
+          url: "http://157.122.54.189:9083/login",
+          data: {
+            username: this.username,
+            password: this.password,
+          },
+        }).then((res) => {
+          if (res.status === 200) {
+            if (res.data.statusCode === 401) {
+              this.$toast("密码错误");
+            } else {
+              const { data, message } = res.data;
+              localStorage.setItem("token", data.token);
+              localStorage.setItem("userId", data.user.id);
+              this.$toast(message);
+              this.$router.push("/profile");
+            }
+          } else {
+            this.$toast.fail("登录失败");
+          }
+        });
+      } else {
+        this.$toast.fail("请输入账号与密码");
+      }
     },
   },
 };
