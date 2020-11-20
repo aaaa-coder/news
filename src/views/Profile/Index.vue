@@ -26,7 +26,7 @@
       <ProfileBar title="我的跟帖" desc="跟帖/回复" />
       <ProfileBar title="我的收藏" desc="文章/视频" />
       <ProfileBar title="设置" />
-      <AuthBtn btnText="退出" class="exit" />
+      <AuthBtn btnText="退出" class="exit" @click.native="logout" />
     </div>
   </div>
 </template>
@@ -48,6 +48,7 @@ export default {
     AuthBtn,
   },
   methods: {
+    //获取用户信息进行渲染
     getUserInfo() {
       this.$axios({
         method: "get",
@@ -62,10 +63,16 @@ export default {
           const { data, message } = res.data;
           if (message == "获取成功") {
             this.userInfo = data;
-            console.log(this.userInfo);
           }
         }
       });
+    },
+    //退出登录
+    logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      this.$toast("退出成功");
+      this.$router.replace("/login");
     },
   },
   mounted() {

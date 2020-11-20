@@ -74,7 +74,7 @@ export default {
           localStorage.setItem("token", data.token);
           localStorage.setItem("userId", data.user.id);
           // this.$router.push("../views/Personal.vue");
-          this.$router.replace("/profile");
+          this.$router.push("/profile");
         }
       });
     },
