@@ -74,7 +74,7 @@ export default {
               localStorage.setItem("token", data.token);
               localStorage.setItem("userId", data.user.id);
               this.$toast(message);
-              this.$router.push("/personal");
+              this.$router.push("/profile");
             }
           } else {
             this.$toast.fail("登录失败");

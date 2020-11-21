@@ -8,8 +8,10 @@ import axios from "axios";
 import Vant from 'vant';
 import 'vant/lib/index.css';
 Vue.use(Vant);
+
 //挂载到原型上
 Vue.prototype.$axios = axios;
+
 Vue.config.productionTip = false
 
 new Vue({

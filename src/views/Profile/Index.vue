@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="userInfo">
+    <div class="userInfo" @click="$router.push('/userInfoEdit')">
       <div v-if="userInfo.head_img">
         <img src="'http://157.122.54.189:9083'+head_img" />
       </div>

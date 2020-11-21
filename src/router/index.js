@@ -52,7 +52,7 @@ const router = new VueRouter({
 })
 router.beforeEach((to, from, next) => {
   const hasToken = localStorage.getItem('token');
-  if (to.path == '/personal') {
+  if (to.path == '/profile') {
     if (hasToken) {
       return next();
     } else {
