@@ -20,7 +20,7 @@
       />
       <ProfileBar
         title="性别"
-        :desc="(gender = 1 ? '小锅锅' : '小改改')"
+        :desc="userInfo.gender == 1 ? '小锅锅' : '小改改'"
         is-link
         @click.native="show = true"
       />
@@ -32,7 +32,7 @@
         v-model="showEdit"
         title="修改昵称"
         show-cancel-button
-        @confirm="setNickname"
+        @confirm="setEditInfo({ nickname: newNickname })"
       >
         <!-- 修改昵称 -->
         <van-field v-model="newNickname" placeholder="请输入修改的昵称" />
@@ -44,7 +44,7 @@
         v-model="editPassword"
         title="修改密码"
         show-cancel-button
-        @confirm="setPassword"
+        @confirm="setEditInfo({ password: newPassword })"
       >
         <!-- 修改密码 -->
         <van-field
@@ -73,13 +73,13 @@ export default {
   data() {
     return {
       userInfo: {},
-      newdata: {},
       show: false,
       showEdit: false,
       editPassword: false,
       actions: [{ name: "男" }, { name: "女" }],
       newNickname: "",
       newPassword: "",
+      newGender: "",
     };
   },
   methods: {
@@ -97,51 +97,47 @@ export default {
           if (message == "获取成功") {
             this.userInfo = data;
             this.newdata = data;
-            // console.log(this.userInfo);
           }
         }
       });
     },
 
-    setNickname() {
+    //编辑信息
+    setEditInfo(newdata) {
       this.$axios({
         method: "post",
         url: "/user_update/" + localStorage.getItem("userId"),
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
-        data: { nickname: this.newNickname },
+        data: newdata,
       }).then((res) => {
         console.log(res);
-        this.getUserInfo();
+        if (res.status === 200) {
+          const { data, message } = res.data;
+          if (message == "修改成功") {
+            this.userInfo = data;
+            this.$toast(message);
+            this.getUserInfo();
+            console.log(newdata);
+            for (let item in newdata) {
+              // console.log(item);
+              if (item == "password") {
+                this.$router.replace("/login");
+              }
+            }
+          }
+        }
       });
-    },
-    setPassword() {},
-    //编辑信息
-    setEditInfo() {
-      // console.log(this.newdata);
-      // this.$axios({
-      //   method: "post",
-      //   url: "/user_update/" + localStorage.getItem("userId"),
-      //   headers: {
-      //     Authorization: "Bearer " + localStorage.getItem("token"),
-      //   },
-      //   data: this.newdata,
-      // }).then((res) => {
-      //   // console.log(res);
-      //   const { data, message } = res.data;
-      //   this.userInfo = data;
-      //   console.log(this.userInfo);
-      //   this.getUserInfo();
-      // });
     },
 
     setGender(action, index) {
       if (action.name == "男") {
-        // this.newdata.gender = "1";
+        this.newGender = 1;
       } else {
-        // this.newdata.gender = "0";
+        this.newGender = 0;
       }
+      this.setEditInfo({ gender: this.newGender });
     },
     onCancel() {
       this.$toast("取消");
