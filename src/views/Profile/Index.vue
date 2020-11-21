@@ -2,7 +2,7 @@
   <div class="container">
     <div class="userInfo" @click="$router.push('/userInfoEdit')">
       <div v-if="userInfo.head_img">
-        <img src="'http://157.122.54.189:9083'+head_img" />
+        <img :src="$axios.defaults.baseURL" + userInfo.head_img />
       </div>
       <div v-else>
         <CircleImg />
@@ -52,8 +52,7 @@ export default {
     getUserInfo() {
       this.$axios({
         method: "get",
-        url:
-          "http://157.122.54.189:9083/user/" + localStorage.getItem("userId"),
+        url: "/user/" + localStorage.getItem("userId"),
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },

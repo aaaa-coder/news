@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
-import Personal from '../views/Personal.vue'
-import UserEdit from "../views/UserEdit.vue"
+import Personal from '../views/MyItem/Personal.vue'
+import UserEdit from "../views/MyItem/UserEdit.vue"
 import ProfileIndex from "../views/Profile/Index.vue"
 import UserInfoEdit from "../views/Profile/UserInfoEdit.vue"
 import UserFocus from "../views/Profile/UserFocus.vue"

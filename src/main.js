@@ -8,7 +8,8 @@ import axios from "axios";
 import Vant from 'vant';
 import 'vant/lib/index.css';
 Vue.use(Vant);
-
+//添加axios基地址
+axios.defaults.baseURL = "http://157.122.54.189:9083";
 //挂载到原型上
 Vue.prototype.$axios = axios;
 
