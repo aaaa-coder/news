@@ -27,32 +27,49 @@ const routes = [
   },
   {
     path: '/personal',
-    component: Personal
+    component: Personal,
+    meta: {
+      needAuth
+    }
   },
   {
     path: '/userEdit',
     component: UserEdit,
-    name: 'userEdit'
+    name: 'userEdit',
+    meta: {
+      needAuth
+    }
   },
   {
     path: '/profile',
     component: ProfileIndex,
+    meta: {
+      needAuth
+    },
   },
   {
     path: '/userInfoEdit',
     component: UserInfoEdit,
+    meta: {
+      needAuth
+    },
   }, {
     path: '/userFocus',
-    component: UserFocus
+    component: UserFocus,
+    meta: {
+      needAuth
+    },
   }
 ]
 
 const router = new VueRouter({
   routes
 })
+//进行响应拦截器，通过使用meta属性
+//进行验证修改
 router.beforeEach((to, from, next) => {
   const hasToken = localStorage.getItem('token');
-  if (to.path == '/profile') {
+  if (to.meta.needAuth) {
     if (hasToken) {
       return next();
     } else {

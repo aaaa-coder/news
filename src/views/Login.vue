@@ -80,8 +80,6 @@ export default {
             this.$toast.fail("登录失败");
           }
         });
-      } else {
-        this.$toast.fail("请输入账号与密码");
       }
     },
   },
