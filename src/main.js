@@ -8,6 +8,9 @@ import axios from "axios";
 import Vant, { Toast } from 'vant';
 import 'vant/lib/index.css';
 Vue.use(Vant);
+//引入uploader
+import { Uploader } from 'vant';
+Vue.use(Uploader);
 //添加axios基地址
 axios.defaults.baseURL = "http://157.122.54.189:9083";
 //添加axios响应拦截器

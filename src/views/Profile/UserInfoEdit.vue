@@ -2,6 +2,7 @@
   <div class="container">
     <ProfileTitle title="编辑资料" />
     <img
+      class="userImg"
       v-if="userInfo.head_img"
       :src="$axios.defaults.baseURL + userInfo.head_img"
     />
@@ -54,6 +55,7 @@
         />
       </van-dialog>
     </div>
+    <!-- 修改性别 -->
     <van-action-sheet
       v-model="show"
       :actions="actions"
@@ -62,6 +64,10 @@
       @cancel="onCancel"
       @select="setGender"
     />
+    <!-- 修改头像 -->
+    <div>
+      <van-uploader multiple :after-read="sendAvatar" />
+    </div>
   </div>
 </template>
 
@@ -104,6 +110,7 @@ export default {
 
     //编辑信息
     setEditInfo(newdata) {
+      const isFormData = newdata instanceof FormData;
       this.$axios({
         method: "post",
         url: "/user_update/" + localStorage.getItem("userId"),
@@ -119,9 +126,10 @@ export default {
             this.userInfo = data;
             this.$toast(message);
             this.getUserInfo();
-            console.log(newdata);
+            if (isFormData) {
+              console.log(res.data.data.url);
+            }
             for (let item in newdata) {
-              // console.log(item);
               if (item == "password") {
                 this.$router.replace("/login");
               }
@@ -130,7 +138,7 @@ export default {
         }
       });
     },
-
+    //修改性别
     setGender(action, index) {
       if (action.name == "男") {
         this.newGender = 1;
@@ -139,13 +147,35 @@ export default {
       }
       this.setEditInfo({ gender: this.newGender });
     },
+    //性别选项取消
     onCancel() {
       this.$toast("取消");
+    },
+
+    sendAvatar(file) {
+      const formData = new FormData();
+      formData.append("file", file.file);
+      this.$axios({
+        method: "post",
+        url: "/upload",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "multipart/form-data",
+        },
+        data: formData,
+      }).then((res) => {
+        if (res.status === 200) {
+          const { data, message } = res.data;
+          this.userInfo.head_img = data.url;
+          this.setEditInfo({ head_img: this.userInfo.head_img });
+        }
+      });
     },
   },
 
   mounted() {
     this.getUserInfo();
+    console.log(this.userInfo.head_img);
   },
   components: {
     CircleImg,
@@ -157,6 +187,8 @@ export default {
 
 <style lang="less" scoped>
 .userImg {
-  margin: 20 /360 * 100vw auto;
+  object-fit: cover;
+  width: 70 /360 * 100vw;
+  height: 70 /360 * 100vw;
 }
 </style>

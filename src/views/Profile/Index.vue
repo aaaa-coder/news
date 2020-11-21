@@ -2,7 +2,10 @@
   <div class="container">
     <div class="userInfo" @click="$router.push('/userInfoEdit')">
       <div v-if="userInfo.head_img">
-        <img :src="$axios.defaults.baseURL + userInfo.head_img" />
+        <img
+          :src="$axios.defaults.baseURL + userInfo.head_img"
+          class="userAvatar"
+        />
       </div>
       <div v-else>
         <CircleImg />
@@ -109,6 +112,11 @@ export default {
       font-size: 17 /360 * 100vw;
     }
   }
+}
+.userAvatar {
+  width: 70 /360 * 100vw;
+  height: 70 /360 * 100vw;
+  border-radius: 50%;
 }
 .exit {
   margin-top: 150 /360 * 100vw;
