@@ -2,7 +2,7 @@
   <div class="container">
     <div class="userInfo" @click="$router.push('/userInfoEdit')">
       <div v-if="userInfo.head_img">
-        <img :src="$axios.defaults.baseURL" + userInfo.head_img />
+        <img :src="$axios.defaults.baseURL + userInfo.head_img" />
       </div>
       <div v-else>
         <CircleImg />
