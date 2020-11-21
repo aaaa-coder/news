@@ -29,7 +29,7 @@ const routes = [
     path: '/personal',
     component: Personal,
     meta: {
-      needAuth
+      needAuth: true
     }
   },
   {
@@ -37,27 +37,27 @@ const routes = [
     component: UserEdit,
     name: 'userEdit',
     meta: {
-      needAuth
+      needAuth: true
     }
   },
   {
     path: '/profile',
     component: ProfileIndex,
     meta: {
-      needAuth
+      needAuth: true
     },
   },
   {
     path: '/userInfoEdit',
     component: UserInfoEdit,
     meta: {
-      needAuth
+      needAuth: true
     },
   }, {
     path: '/userFocus',
     component: UserFocus,
     meta: {
-      needAuth
+      needAuth: true
     },
   }
 ]
