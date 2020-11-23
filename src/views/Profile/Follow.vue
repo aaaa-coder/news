@@ -10,7 +10,7 @@
       <img v-else src="@/assets/smoke.jpg" class="avatar" />
       <div class="follow_info">
         <div class="name">{{ user.nickname }}</div>
-        <div class="date">1314-5-20</div>
+        <div class="date">2019-10-10</div>
       </div>
 
       <div class="unfollow" @click="unfollow(user.id)">取消关注</div>
@@ -49,6 +49,7 @@ export default {
           const { message } = res.data;
           if (message == "取消关注成功") {
             // console.log(res);
+            this.$toast.success(message);
             this.getFollow();
           }
         }

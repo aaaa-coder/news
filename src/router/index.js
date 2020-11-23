@@ -9,6 +9,7 @@ import ProfileIndex from "../views/Profile/Index.vue"
 import UserInfoEdit from "../views/Profile/UserInfoEdit.vue"
 import Follow from "../views/Profile/Follow.vue"
 import Test from "../views/test.vue"
+import NewsIndex from "../views/Index.vue"
 
 Vue.use(VueRouter)
 
@@ -64,6 +65,10 @@ const routes = [
     path: '/test',
     component: Test
   },
+  {
+    path: '/index',
+    component: NewsIndex,
+  }
 ]
 
 const router = new VueRouter({
