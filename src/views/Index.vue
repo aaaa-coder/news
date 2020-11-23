@@ -26,21 +26,7 @@
 
     <!-- 新闻内容 -->
     <div class="news_content">
-      <NewsContent
-        title="林志玲穿透视黑纱裙米兰看秀腹部微隆显孕味"
-        publish="火星时报"
-        nums="52"
-      />
-      <NewsContent
-        title="亚马逊雨林为何燃烧？除了新总统“急功近利”的开发，国际资本才是真凶"
-        publish="火星时报"
-        nums="52"
-      />
-      <NewsContent
-        title="美军与英军联合训练 6机编队阵容强大"
-        publish="火星时报"
-        nums="52"
-      />
+      <NewsContent :category="3" />
     </div>
   </div>
 </template>
