@@ -1,14 +1,19 @@
 <template>
   <div class="container">
     <ProfileTitle title="我的关注" />
-    <div class="info">
-      <img src="@/assets/smoke.jpg" class="avatar" />
+    <div class="info" v-for="user in followList" :key="user.id">
+      <img
+        class="avatar"
+        v-if="user.head_img"
+        :src="$axios.defaults.baseURL + user.head_img"
+      />
+      <img v-else src="@/assets/smoke.jpg" class="avatar" />
       <div class="follow_info">
-        <div class="name">火星新闻播报</div>
+        <div class="name">{{ user.nickname }}</div>
         <div class="date">1314-5-20</div>
       </div>
 
-      <div class="unfollow">取消关注</div>
+      <div class="unfollow" @click="unfollow(user.id)">取消关注</div>
     </div>
   </div>
 </template>
@@ -16,6 +21,11 @@
 <script>
 import ProfileTitle from "@/components/ProfileTitle";
 export default {
+  data() {
+    return {
+      followList: [],
+    };
+  },
   components: {
     ProfileTitle,
   },
@@ -25,11 +35,27 @@ export default {
         url: "/user_follows",
       }).then((res) => {
         if (res.status === 200) {
-          console.log(res);
+          const { data } = res.data;
+          //   console.log(data);
+          this.followList = data;
+        }
+      });
+    },
+    unfollow(userId) {
+      this.$axios({
+        url: "/user_unfollow/" + userId,
+      }).then((res) => {
+        if (res.status === 200) {
+          const { message } = res.data;
+          if (message == "取消关注成功") {
+            // console.log(res);
+            this.getFollow();
+          }
         }
       });
     },
   },
+
   mounted() {
     this.getFollow();
   },
