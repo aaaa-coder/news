@@ -3,7 +3,7 @@
     <!-- 主页头部 -->
     <div class="index_top">
       <i class="iconfont iconnew"></i>
-      <div class="search">
+      <div class="search" @click="$router.push('/search')">
         <i class="iconfont iconsearch"></i>
         <span>搜索新闻</span>
       </div>
@@ -26,7 +26,7 @@
 
     <!-- 新闻内容 -->
     <div class="news_content">
-      <NewsContent :category="3" />
+      <NewsContent />
     </div>
   </div>
 </template>
