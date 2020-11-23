@@ -1,12 +1,15 @@
 <template>
   <div class="container">
     <ProfileTitle title="编辑资料" />
-    <img
-      class="userImg"
-      v-if="userInfo.head_img"
-      :src="$axios.defaults.baseURL + userInfo.head_img"
-    />
-    <CircleImg v-else class="userImg" />
+    <van-uploader multiple :after-read="sendAvatar">
+      <img
+        class="userImg"
+        v-if="userInfo.head_img"
+        :src="$axios.defaults.baseURL + userInfo.head_img"
+      />
+      <CircleImg v-else class="userImg" />
+    </van-uploader>
+
     <!-- 编辑功能 -->
     <div class="userEdit">
       <ProfileBar
@@ -33,7 +36,7 @@
         v-model="showEdit"
         title="修改昵称"
         show-cancel-button
-        @confirm="setEditInfo({ nickname: newNickname })"
+        @confirm="setNickname"
       >
         <!-- 修改昵称 -->
         <van-field v-model="newNickname" placeholder="请输入修改的昵称" />
@@ -64,10 +67,6 @@
       @cancel="onCancel"
       @select="setGender"
     />
-    <!-- 修改头像 -->
-    <div>
-      <van-uploader multiple :after-read="sendAvatar" />
-    </div>
   </div>
 </template>
 
@@ -76,6 +75,12 @@ import CircleImg from "@/components/CircleImg";
 import ProfileBar from "@/components/ProfileBar";
 import ProfileTitle from "@/components/ProfileTitle";
 export default {
+  components: {
+    CircleImg,
+    ProfileBar,
+    ProfileTitle,
+  },
+
   data() {
     return {
       userInfo: {},
@@ -94,9 +99,6 @@ export default {
       this.$axios({
         method: "get",
         url: "/user/" + localStorage.getItem("userId"),
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
       }).then((res) => {
         if (res.status === 200) {
           const { data, message } = res.data;
@@ -110,13 +112,9 @@ export default {
 
     //编辑信息
     setEditInfo(newdata) {
-      const isFormData = newdata instanceof FormData;
       this.$axios({
         method: "post",
         url: "/user_update/" + localStorage.getItem("userId"),
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
         data: newdata,
       }).then((res) => {
         console.log(res);
@@ -126,9 +124,6 @@ export default {
             this.userInfo = data;
             this.$toast(message);
             this.getUserInfo();
-            if (isFormData) {
-              console.log(res.data.data.url);
-            }
             for (let item in newdata) {
               if (item == "password") {
                 this.$router.replace("/login");
@@ -138,7 +133,11 @@ export default {
         }
       });
     },
-    //修改性别
+    setNickname() {
+      this.setEditInfo({ nickname: this.newNickname });
+      this.newNickname = "";
+    },
+    //修改性别，可以直接将gender写在数组里
     setGender(action, index) {
       if (action.name == "男") {
         this.newGender = 1;
@@ -147,11 +146,12 @@ export default {
       }
       this.setEditInfo({ gender: this.newGender });
     },
+
     //性别选项取消
     onCancel() {
       this.$toast("取消");
     },
-
+    //发送头像
     sendAvatar(file) {
       const formData = new FormData();
       formData.append("file", file.file);
@@ -159,7 +159,6 @@ export default {
         method: "post",
         url: "/upload",
         headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "multipart/form-data",
         },
         data: formData,
@@ -172,23 +171,18 @@ export default {
       });
     },
   },
-
   mounted() {
     this.getUserInfo();
-    console.log(this.userInfo.head_img);
-  },
-  components: {
-    CircleImg,
-    ProfileBar,
-    ProfileTitle,
   },
 };
 </script>
 
 <style lang="less" scoped>
 .userImg {
-  object-fit: cover;
   width: 70 /360 * 100vw;
   height: 70 /360 * 100vw;
+  margin-left: 155 /360 * 100vw;
+  object-fit: cover;
+  border-radius: 50%;
 }
 </style>

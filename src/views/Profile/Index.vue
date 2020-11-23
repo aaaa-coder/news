@@ -56,9 +56,6 @@ export default {
       this.$axios({
         method: "get",
         url: "/user/" + localStorage.getItem("userId"),
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
       }).then((res) => {
         // console.log(res);
         if (res.status === 200) {

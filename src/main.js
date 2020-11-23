@@ -13,6 +13,16 @@ import { Uploader } from 'vant';
 Vue.use(Uploader);
 //添加axios基地址
 axios.defaults.baseURL = "http://157.122.54.189:9083";
+//添加axios请求拦截器
+axios.interceptors.request.use(config => {
+  if (!config.headers.Authorization && localStorage.getItem('token')) {
+    config.headers.Authorization = 'Bearer ' + localStorage.getItem('token');
+  }
+  return config;
+})
+
+
+
 //添加axios响应拦截器
 axios.interceptors.response.use(res => {
   //定义返回码的正则
