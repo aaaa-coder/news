@@ -7,8 +7,8 @@ import Personal from '../views/MyItem/Personal.vue'
 import UserEdit from "../views/MyItem/UserEdit.vue"
 import ProfileIndex from "../views/Profile/Index.vue"
 import UserInfoEdit from "../views/Profile/UserInfoEdit.vue"
-import UserFocus from "../views/Profile/UserFocus.vue"
-
+import Follow from "../views/Profile/Follow.vue"
+import Test from "../views/test.vue"
 
 Vue.use(VueRouter)
 
@@ -54,12 +54,16 @@ const routes = [
       needAuth: true
     },
   }, {
-    path: '/userFocus',
-    component: UserFocus,
+    path: '/follow',
+    component: Follow,
     meta: {
       needAuth: true
-    },
-  }
+    }
+  },
+  {
+    path: '/test',
+    component: Test
+  },
 ]
 
 const router = new VueRouter({
