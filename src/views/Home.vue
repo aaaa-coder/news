@@ -1,9 +1,16 @@
 <template>
-  <div class="HomeContainer">首页</div>
+  <div class="HomeContainer">
+    <HomeHeader />
+  </div>
 </template>
 
 <script>
-export default {};
+import HomeHeader from "../components/HomeHeader";
+export default {
+  components: {
+    HomeHeader,
+  },
+};
 </script>
 
 <style lang="less" scoped>
