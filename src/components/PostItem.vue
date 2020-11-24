@@ -13,16 +13,16 @@
         </div>
       </div>
       <div class="right">
-        <img :src="post.cover[0].url" alt="" class="signle_cover" />
+        <img :src="post.cover[0].url | setImgUrl" alt="" class="signle_cover" />
       </div>
     </div>
     <!-- 多图的情况 -->
     <div class="multiplePost" v-if="post.type == 1 && post.cover.length >= 3">
       <div class="post_title">{{ post.title }}</div>
       <div class="pic">
-        <img :src="post.cover[0].url" alt="" class="mult_cover" />
-        <img :src="post.cover[1].url" alt="" class="mult_cover" />
-        <img :src="post.cover[2].url" alt="" class="mult_cover" />
+        <img :src="post.cover[0].url | setImgUrl" alt="" class="mult_cover" />
+        <img :src="post.cover[1].url | setImgUrl" alt="" class="mult_cover" />
+        <img :src="post.cover[2].url | setImgUrl" alt="" class="mult_cover" />
       </div>
       <div class="info">
         <span class="publisher">{{ post.user.nickname }}</span>
@@ -33,7 +33,7 @@
     <div class="video" v-if="post.type == 2 && post.cover.length > 0">
       <div class="post_title">{{ post.title }}</div>
       <div class="video_pic">
-        <img :src="post.cover[0].url" alt="" class="video_cover" />
+        <img :src="post.cover[0].url | setImgUrl" alt="" class="video_cover" />
         <span class="play iconfont iconshipin"></span>
       </div>
       <div class="info">

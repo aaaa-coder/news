@@ -12,6 +12,7 @@ Vue.use(Vant);
 import { Uploader } from 'vant';
 Vue.use(Uploader);
 //添加axios基地址
+// axios.defaults.baseURL = "http://liangwei.tech:3000";
 axios.defaults.baseURL = "http://157.122.54.189:9083";
 //添加axios请求拦截器
 axios.interceptors.request.use(config => {
@@ -20,8 +21,6 @@ axios.interceptors.request.use(config => {
   }
   return config;
 })
-
-
 
 //添加axios响应拦截器
 axios.interceptors.response.use(res => {
@@ -39,6 +38,14 @@ axios.interceptors.response.use(res => {
   }
 
   return res;
+})
+
+Vue.filter('setImgUrl', (objUrl) => {
+  if (objUrl.indexOf('http') > -1) {
+    return objUrl;
+  } else {
+    return axios.defaults.baseURL + objUrl;
+  }
 })
 //挂载到原型上
 Vue.prototype.$axios = axios;
