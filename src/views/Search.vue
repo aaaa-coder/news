@@ -4,9 +4,9 @@
       <i class="iconfont iconjiantou2"></i>
       <div class="search">
         <i class="iconfont iconsearch"></i>
-        <span>通灵兽召唤术</span>
+        <input type="text" placeholder="通灵兽消失术" v-model="searchValue" />
       </div>
-      <div class="search_right">搜索</div>
+      <div class="search_right" @click="searchArticles">搜索</div>
     </div>
     <!-- 历史记录 -->
     <div class="history">
@@ -29,7 +29,37 @@
 
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      searchValue: "",
+      recommendValue: "",
+    };
+  },
+  methods: {
+    searchArticles() {
+      this.$axios({
+        url: "/post_search",
+        data: {
+          keyword: this.searchValue,
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    },
+    //推荐搜索
+    recommendSearch() {
+      this.$axios({
+        url: "/post_search_recommend",
+      }).then((res) => {
+        console.log(res);
+      });
+    },
+  },
+  // mounted() {
+  //   this.recommendSearch();
+  // },
+};
 </script>
 
 <style lang="less" scoped>
@@ -41,6 +71,7 @@ export default {};
   justify-content: space-between;
   align-items: center;
   margin-left: 20 /360 * 100vw;
+  font-size: 14 /360 * 100vw;
   .iconjiantou2 {
     padding-right: 10 /360 * 100vw;
   }
@@ -55,6 +86,9 @@ export default {};
     .iconsearch {
       color: #888;
       margin-right: 3 /360 * 100vw;
+    }
+    input {
+      border: 0;
     }
   }
   .search_right {

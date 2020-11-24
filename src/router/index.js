@@ -12,6 +12,7 @@ import Test from "../views/test.vue"
 import NewsIndex from "../views/Index.vue"
 import NewsContent from "../components/NewsContent.vue"
 import Search from "../views/Search.vue"
+import Administration from "../views/Administration.vue"
 
 Vue.use(VueRouter)
 
@@ -77,6 +78,12 @@ const routes = [
   {
     path: '/search',
     component: Search,
+  }, {
+    path: '/administration',
+    component: Administration,
+    meta: {
+      needAuth: true
+    },
   }
 ]
 
