@@ -1,6 +1,11 @@
 <template>
   <div class="newsWrapper">
-    <PostItem v-for="post in postList" :key="post.id" :post="post" />
+    <PostItem
+      v-for="post in postList"
+      :key="post.id"
+      :post="post"
+      @click.native="$router.push({ name: 'particular', query: post.id })"
+    />
   </div>
 </template>
 
@@ -15,12 +20,13 @@ export default {
   components: {
     PostItem,
   },
+
   mounted() {
     this.$axios({
       url: "/post",
     }).then((res) => {
       if (res.status === 200) {
-        console.log(res);
+        // console.log(res);
         const { data } = res.data;
         this.postList = data;
       }

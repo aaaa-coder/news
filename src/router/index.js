@@ -13,6 +13,7 @@ import NewsIndex from "../views/Index.vue"
 import NewsContent from "../components/NewsContent.vue"
 import Search from "../views/Search.vue"
 import Administration from "../views/Administration.vue"
+import NewsParticular from "../views/NewsParticular.vue"
 
 Vue.use(VueRouter)
 
@@ -78,12 +79,17 @@ const routes = [
   {
     path: '/search',
     component: Search,
-  }, {
+  },
+  {
     path: '/administration',
     component: Administration,
     meta: {
       needAuth: true
     },
+  }, {
+    path: '/particular',
+    component: NewsParticular,
+    name: 'particular',
   }
 ]
 

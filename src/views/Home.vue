@@ -34,8 +34,15 @@ export default {
       }).then((res) => {
         if (res.status === 200) {
           const { data } = res.data;
-          this.categoryList = data;
-          console.log(res);
+          this.categoryList = data.map((category) => {
+            return {
+              ...category,
+              postList: [],
+            };
+            console.log(category);
+            console.log(postList);
+          });
+          // console.log(res);
         }
       });
     },
