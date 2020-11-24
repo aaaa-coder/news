@@ -4,7 +4,9 @@
       v-for="post in postList"
       :key="post.id"
       :post="post"
-      @click.native="$router.push({ name: 'particular', query: post.id })"
+      @click.native="
+        $router.push({ name: 'particular', query: { newsId: post.id } })
+      "
     />
   </div>
 </template>

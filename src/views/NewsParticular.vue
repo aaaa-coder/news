@@ -1,13 +1,13 @@
 <template>
   <div class="newsWrapper">
     <div class="news_header">
-      <i class="iconfont iconjiantou2"></i>
+      <i class="iconfont iconjiantou2" @click="$router.back()"></i>
       <i class="iconfont iconnew"></i>
       <span class="follow">已关注</span>
     </div>
 
     <div class="news_content">
-      <NewsItem />
+      <NewsItem :newsId="newsId" />
     </div>
   </div>
 </template>
@@ -15,25 +15,16 @@
 <script>
 import NewsItem from "../components/NewsItem";
 export default {
+  data() {
+    return {
+      newsId: "",
+    };
+  },
   components: {
     NewsItem,
   },
-  methods: {
-    getNewsItem() {
-      const id = this.$route.query;
-      this.$axios({
-        url: "/post/" + id,
-      }).then((res) => {
-        if (res.status === 200) {
-          const { data } = res.data;
-          console.log(data);
-        }
-      });
-    },
-  },
   mounted() {
-    // console.log(this.$route.query);
-    this.getNewsItem();
+    this.newsId = this.$route.query;
   },
 };
 </script>
