@@ -3,10 +3,12 @@
     <div class="news_header">
       <i class="iconfont iconjiantou2" @click="$router.back()"></i>
       <i class="iconfont iconnew"></i>
-      <span v-if="isFollow == false" class="unfollow" @click="follow"
-        >关注</span
-      >
-      <span v-else class="follow" @click="unfollow">已关注</span>
+      <div>
+        <span v-if="isFollow == false" class="unfollow" @click="follow"
+          >关注</span
+        >
+        <span v-else class="follow" @click="unfollow">已关注</span>
+      </div>
     </div>
 
     <div class="news_content">
@@ -33,6 +35,7 @@ export default {
       newsItem: {},
       publisher: {},
       isFollow: false,
+      followList: [],
     };
   },
   components: {
@@ -72,10 +75,21 @@ export default {
         }
       });
     },
+    getFollowList() {
+      this.$axios({
+        url: "/user_follows",
+      }).then((res) => {
+        if (res.status === 200) {
+          const { data } = res.data;
+          // this.followList = data;
+        }
+      });
+    },
   },
   mounted() {
     this.newsId = this.$route.query.newsId;
     this.getNewsItem();
+    this.getFollowList();
   },
 };
 </script>
