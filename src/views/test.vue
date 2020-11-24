@@ -5,7 +5,9 @@
       :key="post.id"
       :post="post"
       @click.native="
-        $router.push({ name: 'particular', query: { newsId: post.id } })
+        post.type == 1
+          ? $router.push({ name: 'particular', query: { newsId: post.id } })
+          : $router.push({ name: 'videoItem', query: { newsId: post.id } })
       "
     />
   </div>
@@ -28,7 +30,6 @@ export default {
       url: "/post",
     }).then((res) => {
       if (res.status === 200) {
-        // console.log(res);
         const { data } = res.data;
         this.postList = data;
       }

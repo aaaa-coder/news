@@ -1,25 +1,14 @@
 <template>
   <div class="newsWrapper">
     <div class="newsItem">
-      <h3>{{ newsItem.title }}</h3>
+      <h3>{{ title }}</h3>
       <!-- 出版者和时间 -->
       <div class="info">
-        <span class="publisher">{{ user.nickname }}</span>
+        <span class="publisher">{{ publisher }}</span>
         <span class="date">2019-10-10</span>
       </div>
       <!-- 新闻内容 -->
-      <div class="desc" v-html="newsItem.content"></div>
-      <!-- 点赞与微信 -->
-      <div class="share">
-        <div class="share_content">
-          <i class="iconfont icondianzan icon"></i>
-          <span class="content">{{ newsItem.like_length }}</span>
-        </div>
-        <div class="share_content">
-          <i class="iconfont iconweixin icon"></i>
-          <span class="content">微信</span>
-        </div>
-      </div>
+      <div class="desc" v-html="content"></div>
     </div>
   </div>
 </template>
@@ -32,7 +21,7 @@ export default {
       user: {},
     };
   },
-  props: ["newsId"],
+  props: ["title", "content", "publisher"],
   methods: {
     getNewsItem() {
       const id = this.$route.query;
@@ -47,17 +36,7 @@ export default {
     },
   },
   watch: {
-    newsId(objId) {
-      this.$axios({
-        url: "/post/" + objId.newsId,
-      }).then((res) => {
-        if (res.status === 200) {
-          const { data } = res.data;
-          this.newsItem = data;
-          this.user = this.newsItem.user;
-        }
-      });
-    },
+    newsId(objId) {},
   },
 };
 </script>
@@ -80,25 +59,6 @@ export default {
     /deep/ img {
       width: 100%;
       object-fit: cover;
-    }
-  }
-  .share {
-    display: flex;
-    justify-content: space-evenly;
-    margin: 25 /360 * 100vw 0;
-    .share_content {
-      font-size: 14 /360 * 100vw;
-      border: 1px solid #ccc;
-      padding: 0 15 /360 * 100vw;
-      height: 28 /360 * 100vw;
-      line-height: 28 /360 * 100vw;
-      border-radius: 14 /360 * 100vw;
-      .icon {
-        margin-right: 8 /360 * 100vw;
-      }
-      .iconweixin {
-        color: #17b017;
-      }
     }
   }
 }

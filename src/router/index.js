@@ -14,6 +14,7 @@ import NewsContent from "../components/NewsContent.vue"
 import Search from "../views/Search.vue"
 import Administration from "../views/Administration.vue"
 import NewsParticular from "../views/NewsParticular.vue"
+import VideoItem from "../views/VideoItem.vue"
 
 Vue.use(VueRouter)
 
@@ -90,6 +91,11 @@ const routes = [
     path: '/particular',
     component: NewsParticular,
     name: 'particular',
+  }
+  , {
+    path: '/videoItem',
+    component: VideoItem,
+    name: 'videoItem',
   }
 ]
 
