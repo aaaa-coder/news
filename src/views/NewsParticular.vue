@@ -4,7 +4,10 @@
       <i class="iconfont iconjiantou2" @click="$router.back()"></i>
       <i class="iconfont iconnew"></i>
       <div>
-        <span v-if="isFollow == false" class="unfollow" @click="follow"
+        <span
+          v-if="newsItem.has_follow == false"
+          class="unfollow"
+          @click="follow"
           >关注</span
         >
         <span v-else class="follow" @click="unfollow">已关注</span>
@@ -34,7 +37,6 @@ export default {
       like: "",
       newsItem: {},
       publisher: {},
-      isFollow: false,
       followList: [],
     };
   },
@@ -61,27 +63,17 @@ export default {
       }).then((res) => {
         if (res.status === 200) {
           this.$toast.success(res.data.message);
-          this.isFollow = true;
+          this.getNewsItem();
         }
       });
     },
     unfollow() {
       this.$axios({
-        url: "/user_unfollow" + this.publisher.id,
+        url: "/user_unfollow/" + this.publisher.id,
       }).then((res) => {
         if (res.status === 200) {
           this.$toast.success(res.data.message);
-          this.isFollow = false;
-        }
-      });
-    },
-    getFollowList() {
-      this.$axios({
-        url: "/user_follows",
-      }).then((res) => {
-        if (res.status === 200) {
-          const { data } = res.data;
-          // this.followList = data;
+          this.getNewsItem();
         }
       });
     },
@@ -89,7 +81,6 @@ export default {
   mounted() {
     this.newsId = this.$route.query.newsId;
     this.getNewsItem();
-    this.getFollowList();
   },
 };
 </script>
