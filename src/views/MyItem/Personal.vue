@@ -42,7 +42,6 @@
 <script>
 import CircleImg from "@/components/CircleImg";
 import AuthOpeartion from "@/components/AuthOpeartion";
-import UserTop from "@/components/UserTop";
 export default {
   data() {
     return {
@@ -57,7 +56,6 @@ export default {
   components: {
     CircleImg,
     AuthOpeartion,
-    UserTop,
   },
   methods: {
     //

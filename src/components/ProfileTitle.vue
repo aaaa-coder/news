@@ -1,5 +1,5 @@
 <template>
-  <div class="userInfo">
+  <div class="profile_nav">
     <i class="iconfont iconjiantou2" @click="$router.back()"></i>
     <h4>{{ title }}</h4>
   </div>
@@ -12,10 +12,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.userInfo {
+.profile_nav {
   display: flex;
   align-items: center;
-  //   justify-content: center;
   padding: 20 /360 * 100vw;
   .iconjiantou2 {
     flex: 1;

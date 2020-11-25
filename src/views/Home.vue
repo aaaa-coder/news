@@ -2,6 +2,7 @@
   <div class="HomeContainer">
     <!-- 首页头部 -->
     <HomeHeader />
+
     <van-tabs v-model="activeCategoryIndex">
       <van-tab
         v-for="category in categoryList"

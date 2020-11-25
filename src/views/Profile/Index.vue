@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <div class="profile">
+      <ProfileTitle title="个人中心" />
+    </div>
+
     <div class="userInfo" @click="$router.push('/userInfoEdit')">
       <div v-if="userInfo.head_img">
         <img
@@ -31,7 +35,11 @@
         @click.native="$router.push('/follow')"
       />
       <ProfileBar title="我的跟帖" desc="跟帖/回复" />
-      <ProfileBar title="我的收藏" desc="文章/视频" />
+      <ProfileBar
+        title="我的收藏"
+        desc="文章/视频"
+        @click.native="$router.push('/favorite')"
+      />
       <ProfileBar title="设置" />
       <AuthBtn btnText="退出" class="exit" @click.native="logout" />
     </div>
@@ -42,6 +50,7 @@
 import CircleImg from "@/components/CircleImg";
 import ProfileBar from "@/components/ProfileBar";
 import AuthBtn from "@/components/AuthBtn";
+import ProfileTitle from "@/components/ProfileTitle";
 
 export default {
   data() {
@@ -53,6 +62,7 @@ export default {
     CircleImg,
     ProfileBar,
     AuthBtn,
+    ProfileTitle,
   },
   methods: {
     //获取用户信息进行渲染
@@ -89,6 +99,8 @@ export default {
   display: flex;
   align-items: center;
   padding: 20 /360 * 100vw;
+
+  // border-top: 5 /360 * 100vw solid #ccc;
   border-bottom: 5 /360 * 100vw solid #ccc;
   .userWrapper {
     flex: 1;

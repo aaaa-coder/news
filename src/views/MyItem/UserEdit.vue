@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import UserTop from "@/components/UserTop";
 import CircleImg from "@/components/CircleImg";
 import AuthOpeartion from "@/components/AuthOpeartion";
 import ProfileTitle from "@/components/ProfileTitle";
@@ -34,7 +33,6 @@ export default {
     };
   },
   components: {
-    UserTop,
     CircleImg,
     AuthOpeartion,
     ProfileTitle,

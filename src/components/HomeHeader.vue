@@ -1,11 +1,11 @@
 <template>
   <div class="headerWrapper">
     <i class="iconfont iconnew"></i>
-    <div class="search_wrapper">
+    <div class="search_wrapper" @click="$router.push('/search')">
       <i class="iconfont iconsearch"></i>
       <span>搜索新闻</span>
     </div>
-    <i class="iconfont iconwode"></i>
+    <i class="iconfont iconwode" @click="$router.push('/profile')"></i>
   </div>
 </template>
 

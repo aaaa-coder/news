@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="search_top">
-      <i class="iconfont iconjiantou2"></i>
+      <i class="iconfont iconjiantou2" @click="$router.back()"></i>
       <div class="search">
         <i class="iconfont iconsearch"></i>
         <input type="text" placeholder="通灵兽消失术" v-model="searchValue" />

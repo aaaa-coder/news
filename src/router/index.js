@@ -15,7 +15,7 @@ import Search from "../views/Search.vue"
 import Administration from "../views/Administration.vue"
 import NewsParticular from "../views/NewsParticular.vue"
 import VideoItem from "../views/VideoItem.vue"
-
+import Favorite from "../views/Profile/Favorite.vue"
 Vue.use(VueRouter)
 
 const routes = [
@@ -96,6 +96,13 @@ const routes = [
     path: '/videoItem',
     component: VideoItem,
     name: 'videoItem',
+  },
+  {
+    path: '/favorite',
+    component: Favorite,
+    meta: {
+      needAuth: true
+    }
   }
 ]
 
