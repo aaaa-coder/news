@@ -8,11 +8,13 @@
         :key="category.id"
         :title="category.name"
       >
-        <PostItem
-          v-for="post in category.postList"
-          :key="post.id"
-          :post="post"
-        />
+        <van-list @load="loadMore" :immediate-check="false">
+          <PostItem
+            v-for="post in category.postList"
+            :key="post.id"
+            :post="post"
+          />
+        </van-list>
       </van-tab>
     </van-tabs>
   </div>
@@ -41,6 +43,12 @@ export default {
     },
   },
   methods: {
+    //分页加载更多
+    loadMore() {
+      const currentCategory = this.categoryList[this.activeCategoryIndex];
+      currentCategory.pageIndex++;
+      this.loadPostList();
+    },
     //获取每个分栏的文章
     loadPostList() {
       const currentCategory = this.categoryList[this.activeCategoryIndex];
@@ -54,7 +62,7 @@ export default {
       }).then((res) => {
         if (res.status === 200) {
           const { data } = res.data;
-          currentCategory.postList = data;
+          currentCategory.postList = [...currentCategory.postList, ...data];
         }
       });
     },
