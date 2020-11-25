@@ -67,6 +67,8 @@ export default {
         if (res.status === 200) {
           const { data } = res.data;
           currentCategory.postList = [...currentCategory.postList, ...data];
+          //加载一页后，将loading变为false，不然加载一页后会卡在loading=true而无法进行加载其他页
+          currentCategory.loading = false;
         }
       });
     },
