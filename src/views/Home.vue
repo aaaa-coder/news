@@ -2,27 +2,17 @@
   <div class="HomeContainer">
     <!-- 首页头部 -->
     <HomeHeader />
-    <!-- 头部新闻列表 -->
     <van-tabs v-model="activeCategoryIndex">
       <van-tab
-        :title="category.name"
         v-for="category in categoryList"
         :key="category.id"
+        :title="category.name"
       >
-        <van-list
-          @load="loadMore"
-          :immediate-check="false"
-          v-model="category.loading"
-          :finished="category.finished"
-          finished-text="在拉就要坏了"
-        >
-          <!-- 遍历还是应该遍历category的postList -->
-          <PostItem
-            v-for="post in category.postList"
-            :key="post.id"
-            :post="post"
-          />
-        </van-list>
+        <PostItem
+          v-for="post in category.postList"
+          :key="post.id"
+          :post="post"
+        />
       </van-tab>
     </van-tabs>
   </div>
@@ -31,7 +21,6 @@
 <script>
 import HomeHeader from "../components/HomeHeader";
 import PostItem from "../components/PostItem";
-
 export default {
   data() {
     return {
@@ -45,65 +34,45 @@ export default {
   },
   watch: {
     activeCategoryIndex() {
-      //category只是某个栏目
-      const currentCategory = this.categoryList[this.activeCategoryIndex];
-      if (currentCategory.postList.length == 0) {
-        this.getPostList();
-      }
+      this.loadPostList();
     },
   },
   methods: {
-    // 分页的事件
-    loadMore() {
-      const currentCategory = this.categoryList[this.activeCategoryIndex];
-      currentCategory.pageIndex++;
-      this.getPostList();
-    },
-    //根据分栏拿文章
-    getPostList() {
+    //获取每个分栏的文章
+    loadPostList() {
       const currentCategory = this.categoryList[this.activeCategoryIndex];
       this.$axios({
-        url: "/post/",
+        url: "/post",
         params: {
           category: currentCategory.id,
-          pageIndex: currentCategory.pageIndex,
-          pageSize: currentCategory.pageSize,
         },
       }).then((res) => {
         if (res.status === 200) {
           const { data } = res.data;
-          currentCategory.postList = [...currentCategory.postList, ...data];
-          currentCategory.loading = false;
-          if (data.length < currentCategory.pageSize) {
-            currentCategory.finished = true;
-          }
+          currentCategory.postList = data;
         }
       });
     },
-    //拿到所有分栏
-    getCategoryList() {
+    //获取分栏列表
+    loadCategoryList() {
       this.$axios({
         url: "/category",
       }).then((res) => {
         if (res.status === 200) {
           const { data } = res.data;
-          this.categoryList = data.map((category) => {
+          this.categoryList = data.map((item) => {
             return {
-              ...category,
+              ...item,
               postList: [],
-              pageIndex: 1,
-              pageSize: 5,
-              loading: false,
-              finished: false,
             };
           });
-          this.getPostList();
+          this.loadPostList();
         }
       });
     },
   },
   mounted() {
-    this.getCategoryList();
+    this.loadCategoryList();
   },
 };
 </script>
