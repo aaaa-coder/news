@@ -12,6 +12,8 @@
           @load="loadMore"
           :immediate-check="false"
           v-model="category.loading"
+          :finished="category.finished"
+          finished-text="人家也是有底线的好伐"
         >
           <PostItem
             v-for="post in category.postList"
@@ -69,6 +71,9 @@ export default {
           currentCategory.postList = [...currentCategory.postList, ...data];
           //加载一页后，将loading变为false，不然加载一页后会卡在loading=true而无法进行加载其他页
           currentCategory.loading = false;
+          if (data.length < currentCategory.pageSize) {
+            currentCategory.finished = true;
+          }
         }
       });
     },
@@ -86,6 +91,7 @@ export default {
               pageIndex: 1,
               pageSize: 5,
               loading: false,
+              finished: false,
             };
           });
           this.loadPostList();
