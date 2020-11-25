@@ -48,6 +48,8 @@ export default {
         url: "/post",
         params: {
           category: currentCategory.id,
+          pageIndex: currentCategory.pageIndex,
+          pageSize: currentCategory.pageSize,
         },
       }).then((res) => {
         if (res.status === 200) {
@@ -67,6 +69,8 @@ export default {
             return {
               ...item,
               postList: [],
+              pageIndex: 1,
+              pageSize: 5,
             };
           });
           this.loadPostList();
