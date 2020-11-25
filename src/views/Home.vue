@@ -9,7 +9,12 @@
         v-for="category in categoryList"
         :key="category.id"
       >
-        {{ category.name }}的内容
+        <!-- 遍历还是应该遍历category的postList -->
+        <PostItem
+          v-for="post in category.postList"
+          :key="post.id"
+          :post="post"
+        />
       </van-tab>
     </van-tabs>
   </div>
@@ -17,6 +22,8 @@
 
 <script>
 import HomeHeader from "../components/HomeHeader";
+import PostItem from "../components/PostItem";
+
 export default {
   data() {
     return {
@@ -26,8 +33,29 @@ export default {
   },
   components: {
     HomeHeader,
+    PostItem,
+  },
+  watch: {
+    activeCategoryIndex() {
+      this.getPostList();
+    },
   },
   methods: {
+    getPostList() {
+      const currentCategory = this.categoryList[this.activeCategoryIndex];
+      this.$axios({
+        url: "/post/",
+        params: {
+          category: currentCategory.id,
+        },
+      }).then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          const { data } = res.data;
+          currentCategory.postList = data;
+        }
+      });
+    },
     getCategoryList() {
       this.$axios({
         url: "/category",
@@ -39,10 +67,8 @@ export default {
               ...category,
               postList: [],
             };
-            console.log(category);
-            console.log(postList);
           });
-          // console.log(res);
+          this.getPostList();
         }
       });
     },
