@@ -40,7 +40,7 @@
         desc="文章/视频"
         @click.native="$router.push('/favorite')"
       />
-      <ProfileBar title="设置" />
+      <ProfileBar title="设置" @click.native="$router.push('/userInfoEdit')" />
       <AuthBtn btnText="退出" class="exit" @click.native="logout" />
     </div>
   </div>

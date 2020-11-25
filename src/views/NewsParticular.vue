@@ -4,10 +4,7 @@
       <i class="iconfont iconjiantou2" @click="$router.back()"></i>
       <i class="iconfont iconnew"></i>
       <div>
-        <span
-          v-if="newsItem.has_follow == false"
-          class="unfollow"
-          @click="follow"
+        <span v-if="!newsItem.has_follow" class="unfollow" @click="follow"
           >关注</span
         >
         <span v-else class="follow" @click="unfollow">已关注</span>
@@ -22,7 +19,16 @@
       />
     </div>
     <div class="share">
-      <NewsShare :like="newsItem.like_length" />
+      <NewsShare
+        :content="newsItem.like_length"
+        className="icondianzan"
+        @click.native="likePost"
+        :class="{
+          good: newsItem.has_like,
+          ungood: !newsItem.has_like,
+        }"
+      />
+      <NewsShare content="微信" className="iconweixin" />
     </div>
   </div>
 </template>
@@ -34,10 +40,10 @@ export default {
   data() {
     return {
       newsId: "",
-      like: "",
       newsItem: {},
       publisher: {},
       followList: [],
+      likeMsg: "",
     };
   },
   components: {
@@ -77,6 +83,15 @@ export default {
         }
       });
     },
+    //喜欢点赞
+    likePost() {
+      this.$axios({
+        url: "/post_like/" + this.newsItem.id,
+      }).then((res) => {
+        this.likeMsg = res.data.message;
+        this.getNewsItem();
+      });
+    },
   },
   mounted() {
     this.newsId = this.$route.query.newsId;
@@ -99,6 +114,7 @@ export default {
   }
   .follow,
   .unfollow {
+    display: block;
     padding: 0 10 /360 * 100vw;
     height: 24 /360 * 100vw;
     line-height: 24 /360 * 100vw;
@@ -110,6 +126,21 @@ export default {
     border: 0;
     background-color: red;
     color: #fff;
+  }
+}
+.share {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 25 /360 * 100vw 0;
+  .good {
+    /deep/.icondianzan {
+      color: red;
+    }
+  }
+  .ungood {
+    /deep/.icondianzan {
+      color: #333;
+    }
   }
 }
 </style>

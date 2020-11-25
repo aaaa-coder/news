@@ -117,7 +117,6 @@ export default {
         url: "/user_update/" + localStorage.getItem("userId"),
         data: newdata,
       }).then((res) => {
-        console.log(res);
         if (res.status === 200) {
           const { data, message } = res.data;
           if (message == "修改成功") {

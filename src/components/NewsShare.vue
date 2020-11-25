@@ -2,13 +2,16 @@
   <div class="shareWrapper">
     <!-- 点赞与微信 -->
     <div class="share">
-      <div class="share_content">
-        <i class="iconfont icondianzan icon"></i>
-        <span class="content">{{ like }}</span>
+      <div class="share_content" v-if="className == 'icondianzan'">
+        <i class="iconfont icon icondianzan"></i>
+        <span class="content">{{ content }}</span>
+        <span></span>
       </div>
-      <div class="share_content">
-        <i class="iconfont iconweixin icon"></i>
-        <span class="content">微信</span>
+
+      <div class="share_content" v-else>
+        <i class="iconfont icon iconweixin"></i>
+        <span class="content">{{ content }}</span>
+        <span></span>
       </div>
     </div>
   </div>
@@ -16,15 +19,13 @@
 
 <script>
 export default {
-  props: ["like"],
+  props: ["content", "className"],
+  mounted() {},
 };
 </script>
 
 <style lang="less" scoped>
 .share {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 25 /360 * 100vw 0;
   .share_content {
     font-size: 14 /360 * 100vw;
     border: 1px solid #ccc;
