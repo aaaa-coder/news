@@ -43,6 +43,7 @@ export default {
   watch: {
     activeCategoryIndex() {
       const currentCategory = this.categoryList[this.activeCategoryIndex];
+      //如果没文章才加载
       if (currentCategory.postList.length == 0) {
         this.loadPostList();
       }
@@ -51,6 +52,7 @@ export default {
   methods: {
     //分页加载更多
     loadMore() {
+      //先拿到页数，每次需要翻页都自增
       const currentCategory = this.categoryList[this.activeCategoryIndex];
       currentCategory.pageIndex++;
       this.loadPostList();
@@ -68,9 +70,11 @@ export default {
       }).then((res) => {
         if (res.status === 200) {
           const { data } = res.data;
+          //进行结构，将原数据与请求的数据进行拼接，而不是替代
           currentCategory.postList = [...currentCategory.postList, ...data];
           //加载一页后，将loading变为false，不然加载一页后会卡在loading=true而无法进行加载其他页
           currentCategory.loading = false;
+          //加载完毕后将finished改为true
           if (data.length < currentCategory.pageSize) {
             currentCategory.finished = true;
           }
