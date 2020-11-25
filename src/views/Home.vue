@@ -9,12 +9,20 @@
         v-for="category in categoryList"
         :key="category.id"
       >
-        <!-- 遍历还是应该遍历category的postList -->
-        <PostItem
-          v-for="post in category.postList"
-          :key="post.id"
-          :post="post"
-        />
+        <van-list
+          @load="loadMore"
+          :immediate-check="false"
+          v-model="category.loading"
+          :finished="category.finished"
+          finished-text="在拉就要坏了"
+        >
+          <!-- 遍历还是应该遍历category的postList -->
+          <PostItem
+            v-for="post in category.postList"
+            :key="post.id"
+            :post="post"
+          />
+        </van-list>
       </van-tab>
     </van-tabs>
   </div>
@@ -45,21 +53,34 @@ export default {
     },
   },
   methods: {
+    // 分页的事件
+    loadMore() {
+      const currentCategory = this.categoryList[this.activeCategoryIndex];
+      currentCategory.pageIndex++;
+      this.getPostList();
+    },
+    //根据分栏拿文章
     getPostList() {
       const currentCategory = this.categoryList[this.activeCategoryIndex];
       this.$axios({
         url: "/post/",
         params: {
           category: currentCategory.id,
+          pageIndex: currentCategory.pageIndex,
+          pageSize: currentCategory.pageSize,
         },
       }).then((res) => {
-        console.log(res);
         if (res.status === 200) {
           const { data } = res.data;
-          currentCategory.postList = data;
+          currentCategory.postList = [...currentCategory.postList, ...data];
+          currentCategory.loading = false;
+          if (data.length < currentCategory.pageSize) {
+            currentCategory.finished = true;
+          }
         }
       });
     },
+    //拿到所有分栏
     getCategoryList() {
       this.$axios({
         url: "/category",
@@ -70,6 +91,10 @@ export default {
             return {
               ...category,
               postList: [],
+              pageIndex: 1,
+              pageSize: 5,
+              loading: false,
+              finished: false,
             };
           });
           this.getPostList();
