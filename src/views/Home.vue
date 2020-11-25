@@ -8,7 +8,11 @@
         :key="category.id"
         :title="category.name"
       >
-        <van-list @load="loadMore" :immediate-check="false">
+        <van-list
+          @load="loadMore"
+          :immediate-check="false"
+          v-model="category.loading"
+        >
           <PostItem
             v-for="post in category.postList"
             :key="post.id"
@@ -79,6 +83,7 @@ export default {
               postList: [],
               pageIndex: 1,
               pageSize: 5,
+              loading: false,
             };
           });
           this.loadPostList();
