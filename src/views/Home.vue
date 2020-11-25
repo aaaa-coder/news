@@ -34,7 +34,10 @@ export default {
   },
   watch: {
     activeCategoryIndex() {
-      this.loadPostList();
+      const currentCategory = this.categoryList[this.activeCategoryIndex];
+      if (currentCategory.postList.length == 0) {
+        this.loadPostList();
+      }
     },
   },
   methods: {
