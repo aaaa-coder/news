@@ -19,6 +19,17 @@
             v-for="post in category.postList"
             :key="post.id"
             :post="post"
+            @click.native="
+              post.type == 1
+                ? $router.push({
+                    name: 'particular',
+                    query: { newsId: post.id },
+                  })
+                : $router.push({
+                    name: 'videoItem',
+                    query: { newsId: post.id },
+                  })
+            "
           />
         </van-list>
       </van-tab>
