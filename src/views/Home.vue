@@ -37,7 +37,11 @@ export default {
   },
   watch: {
     activeCategoryIndex() {
-      this.getPostList();
+      //category只是某个栏目
+      const currentCategory = this.categoryList[this.activeCategoryIndex];
+      if (currentCategory.postList.length == 0) {
+        this.getPostList();
+      }
     },
   },
   methods: {
