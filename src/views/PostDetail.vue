@@ -4,6 +4,7 @@
       <i class="iconfont iconjiantou2"></i>
       <i class="iconfont iconnew"></i>
       <span
+        @click="follow"
         :class="{
           unfollow: !postList.has_follow,
         }"
@@ -45,9 +46,25 @@ export default {
       });
     },
     follow() {
-      this.$axios({
-        url: "",
-      });
+      if (!this.postList.has_follow) {
+        this.$axios({
+          url: "/user_follows/" + this.postList.user.id,
+        }).then((res) => {
+          if (res.status === 200) {
+            this.postList.has_follow = true;
+            this.$toast.success(res.data.message);
+          }
+        });
+      } else {
+        this.$axios({
+          url: "/user_unfollow/" + this.postList.user.id,
+        }).then((res) => {
+          if (res.status === 200) {
+            this.postList.has_follow = false;
+            this.$toast(res.data.message);
+          }
+        });
+      }
     },
   },
   mounted() {
