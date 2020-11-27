@@ -4,7 +4,7 @@
     <div class="normalPost" v-if="postList.type == 1">
       <!-- 新闻头部 -->
       <div class="header">
-        <i class="iconfont iconjiantou2"></i>
+        <i class="iconfont iconjiantou2" @click="$router.back()"></i>
         <i class="iconfont iconnew"></i>
         <span
           class="follow"

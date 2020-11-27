@@ -9,7 +9,17 @@
       <div class="search_right" @click="searchArticles">搜索</div>
     </div>
     <div class="showRecommend" v-if="this.searchValue">
-      <SearchBar v-for="post in postList" :key="post.id" :title="post.title" />
+      <SearchBar
+        v-for="post in postList"
+        :key="post.id"
+        :title="post.title"
+        @click.native="
+          $router.push({
+            name: 'postDetail',
+            query: { postId: post.id },
+          })
+        "
+      />
     </div>
 
     <div class="recommend" v-else>
@@ -57,7 +67,6 @@ export default {
     searchArticles() {
       this.$axios({
         url: "/post_search",
-
         params: {
           keyword: this.searchValue,
         },
