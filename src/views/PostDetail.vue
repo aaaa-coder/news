@@ -265,6 +265,7 @@ export default {
     display: flex;
     align-items: center;
     margin-top: 10 /360 * 100vw;
+    margin-bottom: 20 /360 * 100vw;
     .avatar {
       max-width: 30 /360 * 100vw;
       height: 30 /360 * 100vw;
@@ -275,6 +276,10 @@ export default {
       flex: 1;
       padding-left: 10 /360 * 100vw;
     }
+  }
+  .title {
+    font-size: 16 /360 * 100vw;
+    color: #333;
   }
 }
 </style>

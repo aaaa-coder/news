@@ -79,10 +79,10 @@ export default {
           keyword: this.searchValue,
         },
       }).then((res) => {
-        let mySearch = JSON.parse(localStorage.getItem("history")) || [];
+        const mySearch = JSON.parse(localStorage.getItem("history")) || [];
         this.searchList.push(this.searchValue);
-        let objSearch = [...mySearch, ...this.searchList];
-        localStorage.setItem("history", JSON.stringify(objSearch));
+        let arrSearch = [...mySearch, ...this.searchList];
+        localStorage.setItem("history", JSON.stringify(arrSearch));
       });
     },
     //推荐搜索
