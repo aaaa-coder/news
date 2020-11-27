@@ -38,7 +38,7 @@
       <ProfileBar
         title="我的收藏"
         desc="文章/视频"
-        @click.native="$router.push('/favorite')"
+        @click.native="$router.push('/postDetail')"
       />
       <ProfileBar title="设置" @click.native="$router.push('/userInfoEdit')" />
       <AuthBtn btnText="退出" class="exit" @click.native="logout" />

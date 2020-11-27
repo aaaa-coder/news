@@ -109,7 +109,9 @@ const routes = [
     }
   }, {
     path: '/postDetail',
-    component: PostDetail
+    component: PostDetail,
+    name: 'postDetail'
+
   }
 ]
 
