@@ -26,7 +26,11 @@
       <!-- 历史记录 -->
       <div class="history">
         <h4>历史记录</h4>
-        <span class="recode">美女</span>
+        <div class="recode">
+          <span v-for="(history, index) in historyList" :key="index">
+            {{ history }}
+          </span>
+        </div>
       </div>
 
       <!-- 热门搜索 -->
@@ -51,6 +55,8 @@ export default {
     return {
       searchValue: "",
       postList: [],
+      searchList: [],
+      historyList: [],
     };
   },
   components: {
@@ -71,7 +77,10 @@ export default {
           keyword: this.searchValue,
         },
       }).then((res) => {
-        console.log(res);
+        let mySearch = JSON.parse(localStorage.getItem("history")) || [];
+        this.searchList.push(this.searchValue);
+        let objSearch = [...mySearch, ...this.searchList];
+        localStorage.setItem("history", JSON.stringify(objSearch));
       });
     },
     //推荐搜索
@@ -88,6 +97,11 @@ export default {
         }
       });
     },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.historyList = JSON.parse(localStorage.getItem("history"));
+    }, 0);
   },
 };
 </script>
@@ -129,9 +143,13 @@ export default {
   margin: 20 /360 * 100vw 0;
   border-bottom: 1px solid #ccc;
   .recode {
-    display: block;
     margin: 20 /360 * 100vw 0;
     font-size: 14 /360 * 100vw;
+    span {
+      display: inline-block;
+      padding: 5 /360 * 100vw;
+      margin: 1px;
+    }
   }
 }
 .hot_search {
