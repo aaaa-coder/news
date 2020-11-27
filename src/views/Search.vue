@@ -64,7 +64,6 @@ export default {
   },
   watch: {
     searchValue(newValue) {
-      console.log(newValue);
       if (newValue) {
         this.recommendSearch();
       } else {
@@ -100,6 +99,9 @@ export default {
         }
       });
     },
+  },
+  mounted() {
+    this.historyList = JSON.parse(localStorage.getItem("history"));
   },
 };
 </script>
