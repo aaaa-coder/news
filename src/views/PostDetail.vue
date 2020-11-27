@@ -47,11 +47,14 @@
       <!-- 视频部分 -->
       <div class="video">
         <video
+          ref="video"
           :src="postList.content"
           controls
-          poster="http://157.122.54.189:9083/uploads/image/IMG1606459976647.jpeg"
+          :poster="$axios.defaults.baseURL + postList.cover[0].url"
+          @pause="pauseVideo"
+          @play="playVideo"
         ></video>
-        <i class="iconfont iconshipin"></i>
+        <i class="iconfont iconshipin" @click="playVideo" v-if="play"></i>
       </div>
       <!-- 信息 -->
       <div class="info">
@@ -67,7 +70,7 @@
         >
       </div>
       <!-- 标题 -->
-      <div class="title"></div>
+      <div class="title">{{ postList.title }}</div>
       <!-- 点赞模块 -->
       <div class="dianzan">
         <div
@@ -95,6 +98,7 @@ export default {
     return {
       postList: {},
       user: {},
+      play: true,
     };
   },
   methods: {
@@ -149,6 +153,15 @@ export default {
           }
         }
       });
+    },
+    //视频播放功能
+    playVideo() {
+      this.$refs.video.play();
+      this.play = false;
+    },
+    pauseVideo() {
+      this.$refs.video.pause();
+      this.play = true;
     },
   },
   mounted() {
