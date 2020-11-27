@@ -20,6 +20,22 @@
         <div class="date">2020-10-10</div>
       </div>
       <div class="postContent" v-html="postList.content"></div>
+      <div class="dianzan">
+        <div
+          class="good"
+          @click="postLike"
+          :class="{
+            favorite: postList.has_like,
+          }"
+        >
+          <i class="iconfont icondianzan"></i>
+          <span>{{ postList.like_length }}</span>
+        </div>
+        <div class="weixin">
+          <i class="iconfont iconweixin"></i>
+          <span>微信</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,9 +58,9 @@ export default {
           this.postList = data;
           this.user = data.user;
         }
-        console.log(res);
       });
     },
+    //关注用户
     follow() {
       if (!this.postList.has_follow) {
         this.$axios({
@@ -65,6 +81,23 @@ export default {
           }
         });
       }
+    },
+    postLike() {
+      this.$axios({
+        url: "/post_like/" + this.postList.id,
+      }).then((res) => {
+        if (res.status === 200) {
+          if (res.data.message == "点赞成功") {
+            this.postList.like_length++;
+            this.postList.has_like = true;
+            this.$toast.success(res.data.message);
+          } else {
+            this.postList.like_length--;
+            this.postList.has_like = false;
+            this.$toast(res.data.message);
+          }
+        }
+      });
     },
   },
   mounted() {
@@ -109,8 +142,37 @@ export default {
   }
 }
 .postContent {
+  color: #333;
   /deep/ img {
     max-width: 100%;
+  }
+}
+.dianzan {
+  margin-top: 20 /360 * 100vw;
+  display: flex;
+  justify-content: space-evenly;
+  color: #333;
+  font-size: 14 /360 * 100vw;
+  .weixin,
+  .good {
+    border: 1px solid #ccc;
+    &.favorite {
+      color: red;
+    }
+    .iconweixin {
+      color: #00c800;
+    }
+  }
+  .iconfont {
+    padding-right: 10 /360 * 100vw;
+  }
+  .good,
+  .weixin {
+    padding: 0 10 /360 * 100vw;
+    border: 1px solid #ccc;
+    height: 26 /360 * 100vw;
+    line-height: 26 /360 * 100vw;
+    border-radius: 13 /360 * 100vw;
   }
 }
 </style>
