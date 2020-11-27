@@ -8,39 +8,57 @@
       </div>
       <div class="search_right" @click="searchArticles">搜索</div>
     </div>
-    <!-- 历史记录 -->
-    <div class="history">
-      <h4>历史记录</h4>
-      <span class="recode">美女</span>
+    <div class="showRecommend" v-if="this.searchValue">
+      <SearchBar v-for="post in postList" :key="post.id" :title="post.title" />
     </div>
 
-    <!-- 热门搜索 -->
-    <div class="hot_search">
-      <h4>热门搜索</h4>
-      <span>办公室小野否认解散</span>
-      <span>月季如何嫁接</span>
-      <span>办公室小野否认解散</span>
-      <span>月季如何嫁接</span>
-      <span>办公室小野否认解散</span>
-      <span>月季如何嫁接</span>
+    <div class="recommend" v-else>
+      <!-- 历史记录 -->
+      <div class="history">
+        <h4>历史记录</h4>
+        <span class="recode">美女</span>
+      </div>
+
+      <!-- 热门搜索 -->
+      <div class="hot_search">
+        <h4>热门搜索</h4>
+        <span>办公室小野否认解散</span>
+        <span>月季如何嫁接</span>
+        <span>办公室小野否认解散</span>
+        <span>月季如何嫁接</span>
+        <span>办公室小野否认解散</span>
+        <span>月季如何嫁接</span>
+      </div>
     </div>
   </div>
 </template>
 
 
 <script>
+import SearchBar from "../components/SearchBar";
 export default {
   data() {
     return {
       searchValue: "",
-      recommendValue: "",
+      postList: [],
     };
+  },
+  components: {
+    SearchBar,
+  },
+  watch: {
+    searchValue(newValue) {
+      if (newValue) {
+        this.recommendSearch();
+      }
+    },
   },
   methods: {
     searchArticles() {
       this.$axios({
         url: "/post_search",
-        data: {
+
+        params: {
           keyword: this.searchValue,
         },
       }).then((res) => {
@@ -51,14 +69,17 @@ export default {
     recommendSearch() {
       this.$axios({
         url: "/post_search_recommend",
+        params: {
+          keyword: this.searchValue,
+        },
       }).then((res) => {
-        console.log(res);
+        if (res.status === 200) {
+          const { data } = res.data;
+          this.postList = data;
+        }
       });
     },
   },
-  // mounted() {
-  //   this.recommendSearch();
-  // },
 };
 </script>
 
