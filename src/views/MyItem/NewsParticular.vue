@@ -21,12 +21,9 @@
     <div class="share">
       <NewsShare
         :content="newsItem.like_length"
+        :dianzan="newsItem.has_like == true ? true : false"
         className="icondianzan"
         @click.native="likePost"
-        :class="{
-          good: newsItem.has_like,
-          ungood: !newsItem.has_like,
-        }"
       />
       <NewsShare content="微信" className="iconweixin" />
     </div>
@@ -34,8 +31,8 @@
 </template>
 
 <script>
-import NewsItem from "../components/NewsItem";
-import NewsShare from "../components/NewsShare";
+import NewsItem from "@/components/NewsItem";
+import NewsShare from "@/components/NewsShare";
 export default {
   data() {
     return {
@@ -43,7 +40,6 @@ export default {
       newsItem: {},
       publisher: {},
       followList: [],
-      likeMsg: "",
     };
   },
   components: {
@@ -88,7 +84,6 @@ export default {
       this.$axios({
         url: "/post_like/" + this.newsItem.id,
       }).then((res) => {
-        this.likeMsg = res.data.message;
         this.getNewsItem();
       });
     },
@@ -96,6 +91,7 @@ export default {
   mounted() {
     this.newsId = this.$route.query.newsId;
     this.getNewsItem();
+    // console.log(this.newsItem.has_like);
   },
 };
 </script>

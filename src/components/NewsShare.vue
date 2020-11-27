@@ -3,7 +3,7 @@
     <!-- 点赞与微信 -->
     <div class="share">
       <div class="share_content" v-if="className == 'icondianzan'">
-        <i class="iconfont icon icondianzan"></i>
+        <i class="iconfont icon icondianzan" :class="{ good: true }"></i>
         <span class="content">{{ content }}</span>
         <span></span>
       </div>
@@ -19,13 +19,25 @@
 
 <script>
 export default {
-  props: ["content", "className"],
-  mounted() {},
+  props: ["content", "className", "dianzan"],
+  mounted() {
+    console.log(this.dianzan);
+  },
 };
 </script>
 
 <style lang="less" scoped>
 .share {
+  .good {
+    .icondianzan {
+      color: red;
+    }
+  }
+  .ungood {
+    .icondianzan {
+      color: #333;
+    }
+  }
   .share_content {
     font-size: 14 /360 * 100vw;
     border: 1px solid #ccc;

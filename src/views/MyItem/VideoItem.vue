@@ -16,12 +16,15 @@
     </div>
 
     <div class="title">{{ newsItem.title }}</div>
-    <NewsShare like="10" />
+    <div class="share">
+      <NewsShare :content="newsItem.like_length" className="icondianzan" />
+      <NewsShare content="微信" className="iconweixin" />
+    </div>
   </div>
 </template>
 
 <script>
-import NewsShare from "../components/NewsShare";
+import NewsShare from "@/components/NewsShare";
 export default {
   data() {
     return {
@@ -103,5 +106,10 @@ export default {
     font-size: 16 /360 * 100vw;
     color: #333;
   }
+}
+.share {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 25 /360 * 100vw 0;
 }
 </style>

@@ -13,9 +13,13 @@ import NewsIndex from "../views/Index.vue"
 import NewsContent from "../components/NewsContent.vue"
 import Search from "../views/Search.vue"
 import Administration from "../views/Administration.vue"
-import NewsParticular from "../views/NewsParticular.vue"
-import VideoItem from "../views/VideoItem.vue"
+import NewsParticular from "../views/MyItem/NewsParticular.vue"
+import VideoItem from "../views/MyItem/VideoItem.vue"
 import Favorite from "../views/Profile/Favorite.vue"
+import PostDetail from "../views/PostDetail.vue"
+
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -103,6 +107,9 @@ const routes = [
     meta: {
       needAuth: true
     }
+  }, {
+    path: '/postDetail',
+    component: PostDetail
   }
 ]
 
