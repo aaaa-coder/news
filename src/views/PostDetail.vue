@@ -46,7 +46,11 @@
     <div class="videoPost" v-if="postList.type == 2">
       <!-- 视频部分 -->
       <div class="video">
-        <video :src="postList.content" controls></video>
+        <video
+          :src="postList.content"
+          controls
+          poster="http://157.122.54.189:9083/uploads/image/IMG1606459976647.jpeg"
+        ></video>
         <i class="iconfont iconshipin"></i>
       </div>
       <!-- 信息 -->
@@ -247,9 +251,10 @@ export default {
   .info {
     display: flex;
     align-items: center;
+    margin-top: 10 /360 * 100vw;
     .avatar {
-      max-width: 40 /360 * 100vw;
-      height: 40 /360 * 100vw;
+      max-width: 30 /360 * 100vw;
+      height: 30 /360 * 100vw;
       border-radius: 50%;
       object-fit: cover;
     }
