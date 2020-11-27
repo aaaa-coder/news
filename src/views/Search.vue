@@ -64,8 +64,11 @@ export default {
   },
   watch: {
     searchValue(newValue) {
+      console.log(newValue);
       if (newValue) {
         this.recommendSearch();
+      } else {
+        this.historyList = JSON.parse(localStorage.getItem("history"));
       }
     },
   },
@@ -97,11 +100,6 @@ export default {
         }
       });
     },
-  },
-  mounted() {
-    setTimeout(() => {
-      this.historyList = JSON.parse(localStorage.getItem("history"));
-    }, 0);
   },
 };
 </script>
