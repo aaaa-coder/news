@@ -1,25 +1,70 @@
 <template>
   <div class="postContainer">
-    <div class="header">
-      <i class="iconfont iconjiantou2"></i>
-      <i class="iconfont iconnew"></i>
-      <span
-        @click="follow"
-        :class="{
-          unfollow: !postList.has_follow,
-        }"
-        >{{ !postList.has_follow ? "关注" : "已关注" }}</span
-      >
-    </div>
+    <!-- 普通新闻 -->
     <div class="normalPost" v-if="postList.type == 1">
+      <!-- 新闻头部 -->
+      <div class="header">
+        <i class="iconfont iconjiantou2"></i>
+        <i class="iconfont iconnew"></i>
+        <span
+          class="follow"
+          @click="follow"
+          :class="{
+            unfollow: !postList.has_follow,
+          }"
+          >{{ !postList.has_follow ? "关注" : "已关注" }}</span
+        >
+      </div>
+      <!-- 标题 -->
       <div class="title">
         <h4>{{ postList.title }}</h4>
       </div>
+      <!-- 新闻信息 -->
       <div class="info">
         <div class="name">{{ user.nickname }}</div>
         <div class="date">2020-10-10</div>
       </div>
+      <!-- 内容 -->
       <div class="postContent" v-html="postList.content"></div>
+      <div class="dianzan">
+        <div
+          class="good"
+          @click="postLike"
+          :class="{
+            favorite: postList.has_like,
+          }"
+        >
+          <i class="iconfont icondianzan"></i>
+          <span>{{ postList.like_length }}</span>
+        </div>
+        <div class="weixin">
+          <i class="iconfont iconweixin"></i>
+          <span>微信</span>
+        </div>
+      </div>
+    </div>
+    <div class="videoPost" v-if="postList.type == 2">
+      <!-- 视频部分 -->
+      <div class="video">
+        <video :src="postList.content" controls></video>
+        <i class="iconfont iconshipin"></i>
+      </div>
+      <!-- 信息 -->
+      <div class="info">
+        <img class="avatar" :src="$axios.defaults.baseURL + user.head_img" />
+        <div class="name">{{ user.nickname }}</div>
+        <span
+          class="follow"
+          @click="follow"
+          :class="{
+            unfollow: !postList.has_follow,
+          }"
+          >{{ !postList.has_follow ? "关注" : "已关注" }}</span
+        >
+      </div>
+      <!-- 标题 -->
+      <div class="title"></div>
+      <!-- 点赞模块 -->
       <div class="dianzan">
         <div
           class="good"
@@ -57,6 +102,7 @@ export default {
           const { data } = res.data;
           this.postList = data;
           this.user = data.user;
+          console.log(res);
         }
       });
     },
@@ -82,6 +128,7 @@ export default {
         });
       }
     },
+    //点赞功能
     postLike() {
       this.$axios({
         url: "/post_like/" + this.postList.id,
@@ -110,43 +157,47 @@ export default {
 .postContainer {
   padding: 0 20 /360 * 100vw;
 }
-.header {
-  display: flex;
-  align-items: center;
-  .iconnew {
-    font-size: 54 /360 * 100vw;
-    flex: 1;
-    padding-left: 5 /360 * 100vw;
+.normalPost {
+  .header {
+    display: flex;
+    align-items: center;
+    .iconnew {
+      font-size: 54 /360 * 100vw;
+      flex: 1;
+      padding-left: 5 /360 * 100vw;
+    }
   }
-  span {
-    height: 24 /360 * 100vw;
-    line-height: 24 /360 * 100vw;
-    padding: 0 10 /360 * 100vw;
-    border: 1px solid #ccc;
-    border-radius: 12 /360 * 100vw;
+  .info {
+    display: flex;
+    align-items: center;
     font-size: 14 /360 * 100vw;
+    color: #888;
+    margin-top: 10 /360 * 100vw;
+    .date {
+      padding-left: 10 /360 * 100vw;
+    }
+  }
+  .postContent {
     color: #333;
-    &.unfollow {
-      background-color: red;
+    /deep/ img {
+      max-width: 100%;
     }
   }
 }
-.info {
-  display: flex;
-  align-items: center;
+//关注
+.follow {
+  height: 24 /360 * 100vw;
+  line-height: 24 /360 * 100vw;
+  padding: 0 10 /360 * 100vw;
+  border: 1px solid #ccc;
+  border-radius: 12 /360 * 100vw;
   font-size: 14 /360 * 100vw;
-  color: #888;
-  margin-top: 10 /360 * 100vw;
-  .date {
-    padding-left: 10 /360 * 100vw;
-  }
-}
-.postContent {
   color: #333;
-  /deep/ img {
-    max-width: 100%;
+  &.unfollow {
+    background-color: red;
   }
 }
+//点赞
 .dianzan {
   margin-top: 20 /360 * 100vw;
   display: flex;
@@ -173,6 +224,39 @@ export default {
     height: 26 /360 * 100vw;
     line-height: 26 /360 * 100vw;
     border-radius: 13 /360 * 100vw;
+  }
+}
+
+.videoPost {
+  .video {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    video {
+      width: 100%;
+    }
+    .iconshipin {
+      position: absolute;
+      font-size: 54 /360 * 100vw;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 50%;
+    }
+  }
+  .info {
+    display: flex;
+    align-items: center;
+    .avatar {
+      max-width: 40 /360 * 100vw;
+      height: 40 /360 * 100vw;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .name {
+      flex: 1;
+      padding-left: 10 /360 * 100vw;
+    }
   }
 }
 </style>
