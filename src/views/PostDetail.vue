@@ -110,7 +110,6 @@ export default {
           const { data } = res.data;
           this.postList = data;
           this.user = data.user;
-          console.log(res);
         }
       });
     },

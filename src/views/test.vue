@@ -1,23 +1,40 @@
-<template>
-  <div class="container">
-    <h3>模拟收藏</h3>
-    <button @click="collect(10)">收藏文章1</button>
+ <template>
+  <div>
+    <MainComment
+      :commentData="comment"
+      v-for="(comment, index) in commentList"
+      :key="index"
+    />
   </div>
 </template>
 
 <script>
+import MainComment from "../components/Comment/Main";
 export default {
-  methods: {
-    collect(id) {
-      this.$axios({
-        url: "/post_star/" + id,
-      }).then((res) => {
-        console.log(res);
-      });
-    },
+  components: {
+    MainComment,
+  },
+  data() {
+    return {
+      commentList: [
+        { content: "666" },
+        { content: "999" },
+        { content: "秀啊老弟" },
+        { content: "可以的" },
+        {
+          content: "老哥稳",
+          parent: {
+            content: "123",
+            parent: { content: "456", parent: { content: "789" } },
+          },
+        },
+      ],
+    };
   },
 };
 </script>
 
 <style>
 </style>
+
+ 

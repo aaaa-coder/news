@@ -89,6 +89,10 @@ export default {
 }
 // 多图片样式
 .multiplePost {
+  padding: 10 /360 * 100vw 0;
+
+  border-bottom: 1px solid #ccc;
+
   .pic {
     display: flex;
     justify-content: space-between;
