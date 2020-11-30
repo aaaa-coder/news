@@ -16,20 +16,16 @@ export default {
   },
   data() {
     return {
-      commentList: [
-        { content: "666" },
-        { content: "999" },
-        { content: "秀啊老弟" },
-        { content: "可以的" },
-        {
-          content: "老哥稳",
-          parent: {
-            content: "123",
-            parent: { content: "456", parent: { content: "789" } },
-          },
-        },
-      ],
+      commentList: [],
     };
+  },
+  created() {
+    this.$axios({
+      url: "/post_comment/1",
+    }).then((res) => {
+      console.log(res);
+      this.commentList = res.data.data;
+    });
   },
 };
 </script>
