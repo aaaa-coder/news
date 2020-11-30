@@ -1,8 +1,23 @@
 <template>
   <div>
-    <div class="box">
+    <div class="main_commnet">
       <Parent v-if="commentData.parent" :parentData="commentData.parent" />
-      {{ commentData.content }}
+      <div class="info">
+        <img
+          v-if="commentData.user.head_img"
+          :src="$axios.defaults.baseURL + commentData.user.head_img"
+          class="avatar"
+        />
+        <img v-else src="@/assets/smoke.jpg" class="avatar" />
+        <div class="userInfo">
+          <div class="name">{{ commentData.user.nickname }}</div>
+          <div class="date">2小时前</div>
+        </div>
+        <div class="btn_reply">回复</div>
+      </div>
+      <div class="content">
+        {{ commentData.content }}
+      </div>
     </div>
   </div>
 </template>
@@ -19,9 +34,37 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.box {
-  padding: 3px;
-  margin: 3px;
+.main_commnet {
+  padding: 0 10 /360 * 100vw;
   border: 1px solid #ccc;
+  .info {
+    display: flex;
+    margin-top: 10 /360 * 100vw;
+    .avatar {
+      width: 36 /360 * 100vw;
+      height: 36 /360 * 100vw;
+      object-fit: cover;
+      border-radius: 18 /360 * 100vw;
+    }
+    .userInfo {
+      flex: 1;
+      padding-left: 10 /360 * 100vw;
+      font-size: 16 /360 * 100vw;
+      color: #333;
+      .date {
+        font-size: 14 /360 * 100vw;
+        color: #888;
+      }
+    }
+    .btn_reply {
+      font-size: 14 /360 * 100vw;
+      color: #888;
+    }
+  }
+  .content {
+    padding: 10 /360 * 100vw 0;
+    font-size: 14 /360 * 100vw;
+    color: #333;
+  }
 }
 </style>
