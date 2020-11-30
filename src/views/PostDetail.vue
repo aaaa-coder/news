@@ -43,6 +43,7 @@
         </div>
       </div>
     </div>
+    <!-- 视频新闻 -->
     <div class="videoPost" v-if="postList.type == 2">
       <!-- 视频部分 -->
       <div class="video">
@@ -89,16 +90,32 @@
         </div>
       </div>
     </div>
+    <!-- 评论模块 -->
+    <div class="comment">
+      <h3>精彩跟帖</h3>
+      <div class="comment_content">
+        <MainComment
+          v-for="comment in commentList"
+          :key="comment.id"
+          :commentData="comment.parent ? comment.parent : comment"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import MainComment from "../components/Comment/Main";
 export default {
+  components: {
+    MainComment,
+  },
   data() {
     return {
       postList: {},
       user: {},
       play: true,
+      commentList: [],
     };
   },
   methods: {
@@ -163,6 +180,19 @@ export default {
       this.play = true;
     },
   },
+
+  created() {
+    //获取评论数据
+    this.$axios({
+      url: "/post_comment/" + this.$route.query.postId,
+    }).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        const { data } = res.data;
+        this.commentList = data;
+      }
+    });
+  },
   mounted() {
     this.loadPost();
   },
@@ -220,6 +250,8 @@ export default {
   justify-content: space-evenly;
   color: #333;
   font-size: 14 /360 * 100vw;
+  border-bottom: 5/360 * 100vw solid#ccc;
+  padding-bottom: 20 /360 * 100vw;
   .weixin,
   .good {
     border: 1px solid #ccc;
@@ -242,7 +274,7 @@ export default {
     border-radius: 13 /360 * 100vw;
   }
 }
-
+//视频模块
 .videoPost {
   .video {
     display: flex;
@@ -279,6 +311,15 @@ export default {
   .title {
     font-size: 16 /360 * 100vw;
     color: #333;
+  }
+}
+// 评论模块
+.comment {
+  margin-top: 20 /360 * 100vw;
+  h3 {
+    width: 100 /360 * 100vw;
+    margin: 0 auto;
+    font-weight: normal;
   }
 }
 </style>

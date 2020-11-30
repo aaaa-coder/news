@@ -36,7 +36,7 @@ export default {
 <style lang="less" scoped>
 .main_commnet {
   padding: 0 10 /360 * 100vw;
-  border: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   .info {
     display: flex;
     margin-top: 10 /360 * 100vw;
