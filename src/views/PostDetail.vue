@@ -50,10 +50,8 @@
         <video
           ref="video"
           :src="postList.content"
-          controls
           :poster="$axios.defaults.baseURL + postList.cover[0].url"
-          @pause="pauseVideo"
-          @play="playVideo"
+          @click="pauseVideo"
         ></video>
         <i class="iconfont iconshipin" @click="playVideo" v-if="play"></i>
       </div>
@@ -378,6 +376,7 @@ export default {
 // 评论模块
 .comment {
   margin-top: 20 /360 * 100vw;
+  margin-bottom: 60 /360 * 100vw;
 
   h3 {
     width: 100 /360 * 100vw;

@@ -27,9 +27,6 @@ import Parent from "../Comment/Parent";
 export default {
   components: { Parent },
   props: ["commentData"],
-  created() {
-    // console.log(this.commentData);
-  },
 };
 </script>
 

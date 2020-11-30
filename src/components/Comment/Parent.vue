@@ -19,7 +19,6 @@
 export default {
   name: "Parent",
   props: ["parentData"],
-  created() {},
 };
 </script>
 
