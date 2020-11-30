@@ -107,6 +107,7 @@
       >
         更多跟帖
       </div>
+      <div class="tips" v-if="!commentList.length">暂无跟帖,抢占沙发</div>
     </div>
   </div>
 </template>
@@ -343,6 +344,14 @@ export default {
     border-radius: 15 /360 * 100vw;
     font-size: 16 /360 * 100vw;
     color: #333;
+  }
+  .tips {
+    width: 200 /360 * 100vw;
+    margin: 0 auto;
+    margin-top: 30 /360 * 100vw;
+    text-align: center;
+    font-size: 16 /360 * 100vw;
+    color: #888;
   }
 }
 </style>
