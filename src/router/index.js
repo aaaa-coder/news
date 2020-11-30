@@ -17,6 +17,7 @@ import NewsParticular from "../views/MyItem/NewsParticular.vue"
 import VideoItem from "../views/MyItem/VideoItem.vue"
 import Favorite from "../views/Profile/Favorite.vue"
 import PostDetail from "../views/PostDetail.vue"
+import UserComment from "../views/UserComment.vue"
 
 
 
@@ -111,7 +112,12 @@ const routes = [
     path: '/postDetail',
     component: PostDetail,
     name: 'postDetail'
-
+  }, {
+    path: '/userComment/:id',
+    component: UserComment,
+    meta: {
+      needAuth: true
+    }
   }
 ]
 

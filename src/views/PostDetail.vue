@@ -100,7 +100,13 @@
           :commentData="comment.parent ? comment.parent : comment"
         />
       </div>
-      <div class="btn_morecommnet" v-if="isShowMore">更多跟帖</div>
+      <div
+        class="btn_morecommnet"
+        v-if="isShowMore"
+        @click="$router.push('/userComment/' + $route.query.postId)"
+      >
+        更多跟帖
+      </div>
     </div>
   </div>
 </template>
