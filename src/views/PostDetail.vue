@@ -109,6 +109,22 @@
       </div>
       <div class="tips" v-if="!commentList.length">暂无跟帖,抢占沙发</div>
     </div>
+    <!-- 底部发布评论模块 -->
+    <footer>
+      <div class="deactive" v-if="false">
+        <input type="text" placeholder="写跟帖" />
+        <div class="comment">
+          <i class="iconfont iconpinglun-"></i>
+          <span class="nums">112</span>
+        </div>
+        <i class="iconfont iconshoucang"></i>
+        <i class="iconfont iconfenxiang"></i>
+      </div>
+      <div class="active" v-if="true">
+        <textarea rows="3"></textarea>
+        <span class="send_comment">发送</span>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -214,7 +230,7 @@ export default {
 
 <style lang="less" scoped>
 .postContainer {
-  padding: 0 20 /360 * 100vw;
+  padding: 0 10 /360 * 100vw;
 }
 .normalPost {
   .header {
@@ -329,6 +345,7 @@ export default {
 // 评论模块
 .comment {
   margin-top: 20 /360 * 100vw;
+
   h3 {
     width: 100 /360 * 100vw;
     margin: 0 auto;
@@ -340,6 +357,7 @@ export default {
     line-height: 30 /360 * 100vw;
     text-align: center;
     margin: 30 /360 * 100vw auto;
+    margin-bottom: 80/360 * 100vw;
     border: 1px solid #ccc;
     border-radius: 15 /360 * 100vw;
     font-size: 16 /360 * 100vw;
@@ -352,6 +370,67 @@ export default {
     text-align: center;
     font-size: 16 /360 * 100vw;
     color: #888;
+  }
+}
+footer {
+  position: fixed;
+  bottom: 10 /360 * 100vw;
+  width: 100%;
+
+  .deactive {
+    height: 30 /360 * 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    .iconfont {
+      font-size: 23 /360 * 100vw;
+    }
+    input {
+      width: 180 /360 * 100vw;
+      height: 28 /360 * 100vw;
+      border: 0;
+      outline: none;
+      background-color: #d7d7d7;
+      border-radius: 14 /360 * 100vw;
+      box-sizing: border-box;
+      padding: 0 20 /360 * 100vw;
+      color: #333;
+      font-size: 14 /360 * 100vw;
+    }
+    .comment {
+      position: relative;
+      margin-bottom: 15 /360 * 100vw;
+      .nums {
+        position: absolute;
+        top: -5 /360 * 100vw;
+        left: 6 /360 * 100vw;
+        font-size: 12 /360 * 100vw;
+        color: #fff;
+        background-color: red;
+        padding: 0 4 /360 * 100vw;
+        border-radius: 6 /360 * 100vw;
+      }
+    }
+  }
+  .active {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    textarea {
+      background-color: #d7d7d7;
+      width: 260 /360 * 100vw;
+      border-radius: 10 /360 * 100vw;
+    }
+    .send_comment {
+      font-size: 16 /360 * 100vw;
+      color: #fff;
+      background-color: red;
+      height: 24 /360 * 100vw;
+      line-height: 24 /360 * 100vw;
+      padding: 0 15 /360 * 100vw;
+      border-radius: 10 /360 * 100vw;
+      margin-left: 12 /360 * 100vw;
+    }
   }
 }
 </style>
