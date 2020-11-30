@@ -111,16 +111,16 @@
     </div>
     <!-- 底部发布评论模块 -->
     <footer>
-      <div class="deactive" v-if="false">
+      <div class="deactive" v-if="true">
         <input type="text" placeholder="写跟帖" />
         <div class="comment">
           <i class="iconfont iconpinglun-"></i>
-          <span class="nums">112</span>
+          <span class="nums">{{ postList.comment_length }}</span>
         </div>
         <i class="iconfont iconshoucang"></i>
         <i class="iconfont iconfenxiang"></i>
       </div>
-      <div class="active" v-if="true">
+      <div class="active" v-if="false">
         <textarea rows="3"></textarea>
         <span class="send_comment">发送</span>
       </div>
@@ -357,7 +357,7 @@ export default {
     line-height: 30 /360 * 100vw;
     text-align: center;
     margin: 30 /360 * 100vw auto;
-    margin-bottom: 80/360 * 100vw;
+    margin-bottom: 70/360 * 100vw;
     border: 1px solid #ccc;
     border-radius: 15 /360 * 100vw;
     font-size: 16 /360 * 100vw;
