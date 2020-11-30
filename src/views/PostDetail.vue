@@ -111,8 +111,8 @@
     </div>
     <!-- 底部发布评论模块 -->
     <footer>
-      <div class="deactive" v-if="true">
-        <input type="text" placeholder="写跟帖" />
+      <div class="deactive" v-if="isWriteComment">
+        <input type="text" placeholder="写跟帖" @click="write_comment" />
         <div class="comment">
           <i class="iconfont iconpinglun-"></i>
           <span class="nums">{{ postList.comment_length }}</span>
@@ -120,9 +120,9 @@
         <i class="iconfont iconshoucang"></i>
         <i class="iconfont iconfenxiang"></i>
       </div>
-      <div class="active" v-if="false">
-        <textarea rows="3"></textarea>
-        <span class="send_comment">发送</span>
+      <div class="active" v-if="!isWriteComment">
+        <textarea rows="3" v-model="commentContent" v-focus></textarea>
+        <span class="send_comment" @click="send_comment">发送</span>
       </div>
     </footer>
   </div>
@@ -134,6 +134,13 @@ export default {
   components: {
     MainComment,
   },
+  directives: {
+    focus: {
+      inserted(el) {
+        el.focus();
+      },
+    },
+  },
   data() {
     return {
       postList: {},
@@ -141,6 +148,8 @@ export default {
       play: true,
       commentList: [],
       isShowMore: false,
+      isWriteComment: true,
+      commentContent: "",
     };
   },
   methods: {
@@ -200,27 +209,51 @@ export default {
       this.$refs.video.play();
       this.play = false;
     },
+    //视频暂停功能
     pauseVideo() {
       this.$refs.video.pause();
       this.play = true;
+    },
+    write_comment() {
+      this.isWriteComment = false;
+    },
+    //发评论
+    send_comment() {
+      this.$axios({
+        method: "post",
+        url: "/post_comment/" + this.$route.query.postId,
+        data: {
+          content: this.commentContent,
+        },
+      }).then((res) => {
+        if (res.status === 200) {
+          this.$toast.success(res.data.message);
+          this.loadComment();
+          this.commentContent = "";
+          this.isWriteComment = true;
+        }
+      });
+    },
+    loadComment() {
+      this.$axios({
+        url: "/post_comment/" + this.$route.query.postId,
+      }).then((res) => {
+        if (res.status === 200) {
+          const { data } = res.data;
+          if (data.length > 3) {
+            this.commentList = data.slice(0, 3);
+            this.isShowMore = true;
+          } else {
+            this.commentList = data;
+          }
+        }
+      });
     },
   },
 
   created() {
     //获取评论数据
-    this.$axios({
-      url: "/post_comment/" + this.$route.query.postId,
-    }).then((res) => {
-      if (res.status === 200) {
-        const { data } = res.data;
-        if (data.length > 3) {
-          this.commentList = data.slice(0, 3);
-          this.isShowMore = true;
-        } else {
-          this.commentList = data;
-        }
-      }
-    });
+    this.loadComment();
   },
   mounted() {
     this.loadPost();
@@ -420,6 +453,8 @@ footer {
       background-color: #d7d7d7;
       width: 260 /360 * 100vw;
       border-radius: 10 /360 * 100vw;
+      padding: 0 10 /360 * 100vw;
+      box-sizing: border-box;
     }
     .send_comment {
       font-size: 16 /360 * 100vw;
