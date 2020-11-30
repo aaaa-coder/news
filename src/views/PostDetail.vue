@@ -100,6 +100,7 @@
           :commentData="comment.parent ? comment.parent : comment"
         />
       </div>
+      <div class="btn_morecommnet" v-if="isShowMore">更多跟帖</div>
     </div>
   </div>
 </template>
@@ -116,6 +117,7 @@ export default {
       user: {},
       play: true,
       commentList: [],
+      isShowMore: false,
     };
   },
   methods: {
@@ -186,10 +188,14 @@ export default {
     this.$axios({
       url: "/post_comment/" + this.$route.query.postId,
     }).then((res) => {
-      console.log(res);
       if (res.status === 200) {
         const { data } = res.data;
-        this.commentList = data;
+        if (data.length > 3) {
+          this.commentList = data.slice(0, 3);
+          this.isShowMore = true;
+        } else {
+          this.commentList = data;
+        }
       }
     });
   },
@@ -320,6 +326,17 @@ export default {
     width: 100 /360 * 100vw;
     margin: 0 auto;
     font-weight: normal;
+  }
+  .btn_morecommnet {
+    width: 120 /360 * 100vw;
+    height: 30 /360 * 100vw;
+    line-height: 30 /360 * 100vw;
+    text-align: center;
+    margin: 30 /360 * 100vw auto;
+    border: 1px solid #ccc;
+    border-radius: 15 /360 * 100vw;
+    font-size: 16 /360 * 100vw;
+    color: #333;
   }
 }
 </style>
