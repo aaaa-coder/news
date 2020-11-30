@@ -40,6 +40,7 @@ export default {
   .info {
     display: flex;
     margin-top: 10 /360 * 100vw;
+    padding: 10 /360 * 100vw 0;
     .avatar {
       width: 36 /360 * 100vw;
       height: 36 /360 * 100vw;
@@ -49,11 +50,14 @@ export default {
     .userInfo {
       flex: 1;
       padding-left: 10 /360 * 100vw;
-      font-size: 16 /360 * 100vw;
       color: #333;
+      .name {
+        font-size: 16 /360 * 100vw;
+      }
       .date {
         font-size: 14 /360 * 100vw;
         color: #888;
+        margin-top: 3 /360 * 100vw;
       }
     }
     .btn_reply {
