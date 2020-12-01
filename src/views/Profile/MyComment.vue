@@ -26,7 +26,8 @@
           </div>
           <div class="content">{{ comment.content }}</div>
           <div class="title">
-            <span>原文：{{ comment.post.title }}</span>
+            <span v-if="comment.post">原文：{{ comment.post.title }}</span>
+            <span v-else>原文：该帖子被删除了</span>
             <i
               class="iconfont iconjiantou1"
               @click="
@@ -79,7 +80,6 @@ export default {
           if (data.length < this.pageSize) {
             this.finished = true;
           }
-          console.log(this.commentList);
         }
       });
     },
