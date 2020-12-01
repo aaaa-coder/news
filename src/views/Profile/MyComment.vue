@@ -27,7 +27,15 @@
           <div class="content">{{ comment.content }}</div>
           <div class="title">
             <span>原文：{{ comment.post.title }}</span>
-            <i class="iconfont iconjiantou1"></i>
+            <i
+              class="iconfont iconjiantou1"
+              @click="
+                $router.push({
+                  path: 'postDetail',
+                  query: { postId: comment.post.id },
+                })
+              "
+            ></i>
           </div>
         </div>
       </div>
@@ -55,6 +63,7 @@ export default {
       this.pageIndex++;
       this.loadComment();
     },
+
     loadComment() {
       this.$axios({
         url: "/user_comments",
@@ -70,6 +79,7 @@ export default {
           if (data.length < this.pageSize) {
             this.finished = true;
           }
+          console.log(this.commentList);
         }
       });
     },
@@ -92,6 +102,22 @@ export default {
       margin-left: 10 /360 * 100vw;
     }
   }
+  .comment_content {
+    height: 70 /360 * 100vw;
+    background-color: #e4e4e4;
+    padding-left: 10 /360 * 100vw;
+    margin-top: 10 /360 * 100vw;
+    color: #888;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    .reply {
+      font-size: 14 /360 * 100vw;
+    }
+    .reply_content {
+      font-size: 16 /360 * 100vw;
+    }
+  }
   .content {
     font-size: 16 /360 * 100vw;
     color: #333;
@@ -111,22 +137,6 @@ export default {
       text-overflow: ellipsis;
       overflow: hidden;
     }
-  }
-}
-.comment_content {
-  height: 70 /360 * 100vw;
-  background-color: #e4e4e4;
-  padding-left: 10 /360 * 100vw;
-  margin-top: 10 /360 * 100vw;
-  color: #888;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  .reply {
-    font-size: 14 /360 * 100vw;
-  }
-  .reply_content {
-    font-size: 16 /360 * 100vw;
   }
 }
 </style>
