@@ -13,7 +13,7 @@
           <div class="name">{{ commentData.user.nickname }}</div>
           <div class="date">2小时前</div>
         </div>
-        <div class="btn_reply">回复</div>
+        <div class="btn_reply" @click="replyComment">回复</div>
       </div>
       <div class="content">
         {{ commentData.content }}
@@ -23,10 +23,17 @@
 </template>
 
 <script>
+import eventBus from "../../utils/eventBus";
 import Parent from "../Comment/Parent";
 export default {
   components: { Parent },
   props: ["commentData"],
+  methods: {
+    //事件总线
+    replyComment() {
+      eventBus.$emit("textMsg", this.commentData.id);
+    },
+  },
 };
 </script>
 

@@ -32,7 +32,6 @@
           </span>
         </div>
       </div>
-
       <!-- 热门搜索 -->
       <div class="hot_search">
         <h4>热门搜索</h4>

@@ -14,12 +14,17 @@
         :commentData="comment.parent ? comment.parent : comment"
       />
     </van-list>
+
+    <div class="comment">
+      <Input :postData="postList" />
+    </div>
   </div>
 </template>
 
 <script>
 import ProfileTitle from "../components/ProfileTitle";
 import MainComment from "../components/Comment/Main";
+import Input from "../components/Comment/Input";
 export default {
   data() {
     return {
@@ -28,11 +33,13 @@ export default {
       pageSize: 10,
       loading: false,
       finished: false,
+      postList: [],
     };
   },
   components: {
     ProfileTitle,
     MainComment,
+    Input,
   },
   methods: {
     loadMoreComment() {
@@ -57,12 +64,24 @@ export default {
         }
       });
     },
+    loadPost() {
+      this.$axios({
+        url: "/post/" + this.$route.params.id,
+      }).then((res) => {
+        if (res.status === 200) {
+          const { data } = res.data;
+          this.postList = data;
+          this.user = data.user;
+        }
+      });
+    },
   },
   created() {
     this.loadComment();
+    this.loadPost();
   },
 };
 </script>
 
-<style>
+<style lang="less" scoped>
 </style>

@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="parent_comment">
     <Parent v-if="parentData.parent" :parentData="parentData.parent" />
     <div class="user_info">
@@ -6,7 +6,7 @@
         <span class="name">{{ parentData.user.nickname }}</span>
         <span class="date">2小时前</span>
       </div>
-      <div class="btn_reply">回复</div>
+      <div class="btn_reply" @click="sendCommment">回复</div>
     </div>
     <!-- 内容模块 -->
     <div class="content">
@@ -16,9 +16,16 @@
 </template>
 
 <script>
+import eventBus from "../../utils/eventBus";
 export default {
   name: "Parent",
   props: ["parentData"],
+  methods: {
+    sendCommment() {
+      console.log(this.parentData);
+      eventBus.$emit("textMsg", this.parentData.id);
+    },
+  },
 };
 </script>
 

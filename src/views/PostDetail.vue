@@ -95,7 +95,7 @@
         <MainComment
           v-for="comment in commentList"
           :key="comment.id"
-          :commentData="comment.parent ? comment.parent : comment"
+          :commentData="comment"
         />
       </div>
       <div
@@ -122,13 +122,7 @@ export default {
     MainComment,
     Input,
   },
-  directives: {
-    focus: {
-      inserted(el) {
-        el.focus();
-      },
-    },
-  },
+
   data() {
     return {
       postList: {},
@@ -216,10 +210,11 @@ export default {
       });
     },
   },
+
   created() {
+    this.loadPost();
     this.loadComment();
     //获取新闻数据
-    this.loadPost();
   },
 };
 </script>

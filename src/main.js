@@ -36,7 +36,6 @@ axios.interceptors.response.use(res => {
     localStorage.removeItem('userId')
     router.replace('/login')
   }
-
   return res;
 })
 Vue.filter('setImgUrl', (objUrl) => {

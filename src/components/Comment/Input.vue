@@ -1,7 +1,7 @@
 <template>
   <div class="input_wrapper">
     <div class="deactive" v-if="isWriteComment">
-      <input type="text" placeholder="写跟帖" @focus="write_comment" />
+      <input type="text" placeholder="写跟帖" @focus="showTextarea" />
       <div class="comment">
         <i class="iconfont iconpinglun-"></i>
         <span class="nums">{{ postData.comment_length }}</span>
@@ -15,24 +15,27 @@
         v-model="commentContent"
         ref="textDom"
         @blur="hideTextarea"
+        placeholder=""
       ></textarea>
-      <span class="send_comment" @click="send_comment">发送</span>
+      <span class="send_comment" @click="sendComment">发送</span>
     </div>
   </div>
 </template>
 
 <script>
+import eventBus from "@/utils/eventBus";
 export default {
   props: ["postData"],
   data() {
     return {
       isWriteComment: true,
       commentContent: "",
+      parentId: "",
     };
   },
   methods: {
     //聚焦弹出textarea
-    write_comment() {
+    showTextarea() {
       this.isWriteComment = false;
       this.$nextTick(() => {
         this.$refs.textDom.focus();
@@ -45,22 +48,36 @@ export default {
       }, 0);
     },
     //发评论
-    send_comment() {
+    sendComment() {
+      console.log(this.parentId);
+      console.log(this.$route.query.postId);
       this.$axios({
         method: "post",
         url: "/post_comment/" + this.$route.query.postId,
         data: {
+          parent_id: this.parentId,
           content: this.commentContent,
         },
       }).then((res) => {
         if (res.status === 200) {
           this.$toast.success(res.data.message);
-          //应该告诉父组件发布评论 需要进行更新
-          this.$emit("reloadComment");
           this.commentContent = "";
+          this.$emit("reloadComment");
+          console.log(res);
         }
       });
     },
+  },
+
+  mounted() {
+    //事件总线
+    eventBus.$on("textMsg", (id) => {
+      this.showTextarea();
+      this.parentId = id;
+    });
+  },
+  destroyed() {
+    eventBus.$off("textMsg");
   },
 };
 </script>
