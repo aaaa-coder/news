@@ -33,7 +33,7 @@ export default {
   methods: {
     write_comment() {
       this.isWriteComment = false;
-      this.$$nextTick(() => {
+      this.$nextTick(() => {
         this.$refs.textDom.focus();
       });
     },
@@ -42,8 +42,43 @@ export default {
         this.isWriteComment = true;
       }, 0);
     },
+    //发评论
+    send_comment() {
+      this.$axios({
+        method: "post",
+        url: "/post_comment/" + this.$route.query.postId,
+        data: {
+          content: this.commentContent,
+        },
+      }).then((res) => {
+        if (res.status === 200) {
+          this.$toast.success(res.data.message);
+          this.loadComment();
+          this.commentContent = "";
+        }
+      });
+    },
+
+    loadComment() {
+      this.$axios({
+        url: "/post_comment/" + this.$route.query.postId,
+      }).then((res) => {
+        if (res.status === 200) {
+          const { data } = res.data;
+          if (data.length > 3) {
+            this.commentList = data.slice(0, 3);
+            this.isShowMore = true;
+          } else {
+            this.commentList = data;
+          }
+        }
+      });
+    },
   },
-  created() {},
+  created() {
+    //获取评论数据
+    this.loadComment();
+  },
 };
 </script>
 <style lang="less" scoped>
