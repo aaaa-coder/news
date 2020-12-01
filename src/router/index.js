@@ -18,6 +18,7 @@ import VideoItem from "../views/MyItem/VideoItem.vue"
 import Favorite from "../views/Profile/Favorite.vue"
 import PostDetail from "../views/PostDetail.vue"
 import UserComment from "../views/UserComment.vue"
+import MyComment from "../views/Profile/MyComment.vue"
 
 
 
@@ -115,6 +116,12 @@ const routes = [
   }, {
     path: '/userComment/:id',
     component: UserComment,
+    meta: {
+      needAuth: true
+    },
+  }, {
+    path: '/comment',
+    component: MyComment,
     meta: {
       needAuth: true
     }

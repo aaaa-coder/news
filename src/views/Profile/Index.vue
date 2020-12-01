@@ -34,7 +34,11 @@
         desc="关注的目标"
         @click.native="$router.push('/follow')"
       />
-      <ProfileBar title="我的跟帖" desc="跟帖/回复" />
+      <ProfileBar
+        title="我的跟帖"
+        desc="跟帖/回复"
+        @click.native="$router.push('/comment')"
+      />
       <ProfileBar
         title="我的收藏"
         desc="文章/视频"
