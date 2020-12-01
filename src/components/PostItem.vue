@@ -9,7 +9,9 @@
         <div class="post_title">{{ post.title }}</div>
         <div class="info">
           <span class="publisher">{{ post.user.nickname }}</span>
-          <span class="comment">{{ post.comment_length }}跟帖</span>
+          <span class="comment" v-if="post.comment_length"
+            >{{ post.comment_length }}跟帖</span
+          >
         </div>
       </div>
       <div class="right">
@@ -26,7 +28,9 @@
       </div>
       <div class="info">
         <span class="publisher">{{ post.user.nickname }}</span>
-        <span class="comment">{{ post.comment_length }}跟帖</span>
+        <span class="comment" v-if="post.comment_length"
+          >{{ post.comment_length }}跟帖</span
+        >
       </div>
     </div>
     <!-- 视频样式 -->
@@ -38,7 +42,9 @@
       </div>
       <div class="info">
         <span class="publisher">{{ post.user.nickname }}</span>
-        <span class="comment">{{ post.comment_length }}跟帖</span>
+        <span class="comment" v-if="post.comment_length"
+          >{{ post.comment_length }}跟帖</span
+        >
       </div>
     </div>
   </div>

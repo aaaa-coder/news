@@ -8,28 +8,26 @@
       </div>
       <div class="search_right" @click="searchArticles">搜索</div>
     </div>
-    <div class="showRecommend" v-if="this.searchValue">
-      <SearchBar
-        v-for="post in postList"
-        :key="post.id"
-        :title="post.title"
+    <div class="showRecommend">
+      <!-- <SearchBar
+        v-for="recommend in recommentList"
+        :key="recommend.id"
+        :title="recommend.title"
         @click.native="
           $router.push({
             name: 'postDetail',
-            query: { postId: post.id },
+            query: { postId: recommend.id },
           })
         "
-      />
+      /> -->
     </div>
 
-    <div class="recommend" v-else>
+    <div class="recommend">
       <!-- 历史记录 -->
       <div class="history">
         <h4>历史记录</h4>
         <div class="recode">
-          <span v-for="(history, index) in historyList" :key="index">
-            {{ history }}
-          </span>
+          <span> </span>
         </div>
       </div>
       <!-- 热门搜索 -->
@@ -43,65 +41,36 @@
         <span>月季如何嫁接</span>
       </div>
     </div>
+
+    <div class="content">
+      <!-- <PostItem v-for="(post, index) in postList" :key="index" :post="post" /> -->
+    </div>
   </div>
 </template>
 
 
 <script>
 import SearchBar from "../components/SearchBar";
+import PostItem from "../components/PostItem";
 export default {
   data() {
     return {
       searchValue: "",
-      postList: [],
-      searchList: [],
-      historyList: [],
     };
   },
   components: {
     SearchBar,
+    PostItem,
   },
   watch: {
-    searchValue(newValue) {
-      if (newValue) {
-        this.recommendSearch();
-      } else {
-        this.historyList = JSON.parse(localStorage.getItem("history"));
-      }
-    },
+    searchValue(newValue) {},
   },
   methods: {
-    searchArticles() {
-      this.$axios({
-        url: "/post_search",
-        params: {
-          keyword: this.searchValue,
-        },
-      }).then((res) => {
-        const mySearch = JSON.parse(localStorage.getItem("history")) || [];
-        this.searchList.push(this.searchValue);
-        let arrSearch = [...mySearch, ...this.searchList];
-        localStorage.setItem("history", JSON.stringify(arrSearch));
-      });
-    },
+    searchArticles() {},
     //推荐搜索
-    recommendSearch() {
-      this.$axios({
-        url: "/post_search_recommend",
-        params: {
-          keyword: this.searchValue,
-        },
-      }).then((res) => {
-        if (res.status === 200) {
-          const { data } = res.data;
-          this.postList = data;
-        }
-      });
-    },
+    recommendSearch() {},
   },
-  mounted() {
-    this.historyList = JSON.parse(localStorage.getItem("history"));
-  },
+  mounted() {},
 };
 </script>
 
