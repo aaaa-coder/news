@@ -31,12 +31,14 @@ export default {
     };
   },
   methods: {
+    //聚焦弹出textarea
     write_comment() {
       this.isWriteComment = false;
       this.$nextTick(() => {
         this.$refs.textDom.focus();
       });
     },
+    //隐藏textarea
     hideTextarea() {
       setTimeout(() => {
         this.isWriteComment = true;
@@ -53,31 +55,12 @@ export default {
       }).then((res) => {
         if (res.status === 200) {
           this.$toast.success(res.data.message);
-          this.loadComment();
+          //应该告诉父组件发布评论 需要进行更新
+          this.$emit("reloadComment");
           this.commentContent = "";
         }
       });
     },
-
-    loadComment() {
-      this.$axios({
-        url: "/post_comment/" + this.$route.query.postId,
-      }).then((res) => {
-        if (res.status === 200) {
-          const { data } = res.data;
-          if (data.length > 3) {
-            this.commentList = data.slice(0, 3);
-            this.isShowMore = true;
-          } else {
-            this.commentList = data;
-          }
-        }
-      });
-    },
-  },
-  created() {
-    //获取评论数据
-    this.loadComment();
   },
 };
 </script>

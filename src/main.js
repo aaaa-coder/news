@@ -46,7 +46,6 @@ Vue.filter('setImgUrl', (objUrl) => {
     return axios.defaults.baseURL + objUrl;
   }
 })
-Vue.prototype.$EventBus = new Vue();
 
 //挂载到原型上
 Vue.prototype.$axios = axios;

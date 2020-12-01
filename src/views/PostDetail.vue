@@ -109,7 +109,7 @@
     </div>
     <!-- 底部发布评论模块 -->
     <footer>
-      <Input :postData="postList" />
+      <Input :postData="postList" @reloadComment="loadComment" />
     </footer>
   </div>
 </template>
@@ -200,23 +200,6 @@ export default {
       this.$refs.video.pause();
       this.play = true;
     },
-
-    //发评论
-    send_comment() {
-      this.$axios({
-        method: "post",
-        url: "/post_comment/" + this.$route.query.postId,
-        data: {
-          content: this.commentContent,
-        },
-      }).then((res) => {
-        if (res.status === 200) {
-          this.$toast.success(res.data.message);
-          this.loadComment();
-          this.commentContent = "";
-        }
-      });
-    },
     loadComment() {
       this.$axios({
         url: "/post_comment/" + this.$route.query.postId,
@@ -233,10 +216,9 @@ export default {
       });
     },
   },
-
   created() {
-    //获取评论数据
     this.loadComment();
+    //获取新闻数据
     this.loadPost();
   },
 };
