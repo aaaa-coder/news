@@ -1,16 +1,16 @@
 <template>
   <div class="container">
     <div class="search_top">
-      <i class="iconfont iconjiantou2" @click="$router.back()"></i>
+      <i class="iconfont iconjiantou2" @click="goback()"></i>
       <div class="search">
         <i class="iconfont iconsearch"></i>
         <input type="text" placeholder="通灵兽消失术" v-model="searchValue" />
       </div>
       <div class="search_right" @click="searchArticles">搜索</div>
     </div>
-    <div class="showRecommend">
-      <!-- <SearchBar
-        v-for="recommend in recommentList"
+    <div class="showRecommend" v-if="searchValue">
+      <SearchBar
+        v-for="recommend in recommendList"
         :key="recommend.id"
         :title="recommend.title"
         @click.native="
@@ -19,10 +19,10 @@
             query: { postId: recommend.id },
           })
         "
-      /> -->
+      />
     </div>
 
-    <div class="recommend">
+    <div class="recommend" v-if="!searchValue && postList.length == 0">
       <!-- 历史记录 -->
       <div class="history">
         <h4>历史记录</h4>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="content">
-      <!-- <PostItem v-for="(post, index) in postList" :key="index" :post="post" /> -->
+      <PostItem v-for="post in postList" :key="post.id" :post="post" />
     </div>
   </div>
 </template>
@@ -56,6 +56,8 @@ export default {
   data() {
     return {
       searchValue: "",
+      recommendList: [],
+      postList: [],
     };
   },
   components: {
@@ -63,12 +65,49 @@ export default {
     PostItem,
   },
   watch: {
-    searchValue(newValue) {},
+    searchValue(newValue) {
+      if (newValue) {
+        this.recommendSearch();
+      }
+    },
   },
   methods: {
-    searchArticles() {},
+    goback() {
+      if (this.postList.length > 0) {
+        this.postList = [];
+      } else {
+        this.$router.back();
+      }
+    },
+    searchArticles() {
+      this.$axios({
+        url: "/post_search",
+        params: {
+          keyword: this.searchValue,
+        },
+      }).then((res) => {
+        if (res.status === 200) {
+          const { data } = res.data;
+          this.postList = data;
+          this.searchValue = "";
+          console.log(this.postList);
+        }
+      });
+    },
     //推荐搜索
-    recommendSearch() {},
+    recommendSearch() {
+      this.$axios({
+        url: "/post_search_recommend",
+        params: {
+          keyword: this.searchValue,
+        },
+      }).then((res) => {
+        if (res.status === 200) {
+          const { data } = res.data;
+          this.recommendList = data;
+        }
+      });
+    },
   },
   mounted() {},
 };
