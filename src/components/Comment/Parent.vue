@@ -6,7 +6,12 @@
         <span class="name">{{ parentData.user.nickname }}</span>
         <span class="date">2小时前</span>
       </div>
-      <div class="btn_reply">回复</div>
+      <div
+        class="btn_reply"
+        @click="this.$EventBus.$emit('reply', parentData.parent.user.id)"
+      >
+        回复
+      </div>
     </div>
     <!-- 内容模块 -->
     <div class="content">

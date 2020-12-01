@@ -39,7 +39,6 @@ axios.interceptors.response.use(res => {
 
   return res;
 })
-
 Vue.filter('setImgUrl', (objUrl) => {
   if (objUrl.indexOf('http') > -1) {
     return objUrl;
@@ -47,6 +46,8 @@ Vue.filter('setImgUrl', (objUrl) => {
     return axios.defaults.baseURL + objUrl;
   }
 })
+Vue.prototype.$EventBus = new Vue();
+
 //挂载到原型上
 Vue.prototype.$axios = axios;
 
