@@ -4,7 +4,12 @@
       <i class="iconfont iconjiantou2" @click="goback()"></i>
       <div class="search">
         <i class="iconfont iconsearch"></i>
-        <input type="text" placeholder="通灵兽消失术" v-model="searchValue" />
+        <input
+          type="text"
+          placeholder="通灵兽消失术"
+          v-model="searchValue"
+          v-focus
+        />
       </div>
       <div class="search_right" @click="searchArticles">搜索</div>
     </div>
@@ -75,6 +80,13 @@ export default {
     },
     historyList() {
       localStorage.setItem("history", JSON.stringify(this.historyList));
+    },
+  },
+  directives: {
+    focus: {
+      inserted(el) {
+        el.focus();
+      },
     },
   },
   methods: {
