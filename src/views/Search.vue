@@ -23,14 +23,16 @@
     </div>
 
     <div class="recommend" v-if="!searchValue && postList.length == 0">
-      <!-- 历史记录 -->
+      <!-- 历史记录  -->
       <div class="history">
         <h4>历史记录</h4>
         <div class="recode">
-          <span> </span>
+          <span v-for="(history, index) in historyList" :key="index">
+            {{ history }}
+          </span>
         </div>
       </div>
-      <!-- 热门搜索 -->
+      <!-- 热门搜索  -->
       <div class="hot_search">
         <h4>热门搜索</h4>
         <span>办公室小野否认解散</span>
@@ -58,6 +60,7 @@ export default {
       searchValue: "",
       recommendList: [],
       postList: [],
+      historyList: [],
     };
   },
   components: {
@@ -70,6 +73,9 @@ export default {
         this.recommendSearch();
       }
     },
+    historyList() {
+      localStorage.setItem("history", JSON.stringify(this.historyList));
+    },
   },
   methods: {
     goback() {
@@ -80,6 +86,7 @@ export default {
       }
     },
     searchArticles() {
+      this.historyList.unshift(this.searchValue);
       this.$axios({
         url: "/post_search",
         params: {
@@ -90,7 +97,6 @@ export default {
           const { data } = res.data;
           this.postList = data;
           this.searchValue = "";
-          console.log(this.postList);
         }
       });
     },
@@ -109,7 +115,11 @@ export default {
       });
     },
   },
-  mounted() {},
+  created() {
+    if (localStorage.getItem("history")) {
+      this.historyList = JSON.parse(localStorage.getItem("history"));
+    }
+  },
 };
 </script>
 
