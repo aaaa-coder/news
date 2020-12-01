@@ -1,35 +1,37 @@
 <template>
   <div class="comment_wrapper">
     <ProfileTitle title="我的跟帖" />
-
-    <div class="comment" v-for="comment in commentList" :key="comment.id">
-      <div v-if="comment.post.type == 1">
-        <div class="date">
-          <span>2019-10-10</span>
-          <span class="hour">10.25</span>
-        </div>
-        <div class="content">{{ comment.content }}</div>
-        <div class="title">
-          <span>原文：{{ comment.post.title }}</span>
-          <i class="iconfont iconjiantou1"></i>
+    <van-list
+      :immediate-check="false"
+      @load="loadMoreComment"
+      :finished="finished"
+      finished-text="没有惹"
+      v-model="loading"
+    >
+      <div class="comment" v-for="comment in commentList" :key="comment.id">
+        <div>
+          <div class="date">
+            <span>2019-10-10</span>
+            <span class="hour">10.25</span>
+          </div>
+          <div class="comment_content" v-if="comment.parent">
+            <div class="reply">
+              回复：{{
+                comment.parent.user.nickname || comment.parent.user.username
+              }}
+            </div>
+            <div class="reply_content">
+              {{ comment.parent.content }}
+            </div>
+          </div>
+          <div class="content">{{ comment.content }}</div>
+          <div class="title">
+            <span>原文：{{ comment.post.title }}</span>
+            <i class="iconfont iconjiantou1"></i>
+          </div>
         </div>
       </div>
-      <div v-if="comment.post.type == 2">
-        <div class="date">
-          <span>2019-10-10</span>
-          <span class="hour">10.25</span>
-        </div>
-        <div class="comment_content">
-          <div class="reply">回复：xxx</div>
-          <div class="reply_content">阿信是谁</div>
-        </div>
-        <div class="content">{{ comment.content }}</div>
-        <div class="title">
-          <span>原文：{{ comment.post.title }}</span>
-          <i class="iconfont iconjiantou1"></i>
-        </div>
-      </div>
-    </div>
+    </van-list>
   </div>
 </template>
 
@@ -39,21 +41,41 @@ export default {
   data() {
     return {
       commentList: [],
+      pageIndex: 1,
+      pageSize: 10,
+      loading: false,
+      finished: false,
     };
   },
   components: {
     ProfileTitle,
   },
+  methods: {
+    loadMoreComment() {
+      this.pageIndex++;
+      this.loadComment();
+    },
+    loadComment() {
+      this.$axios({
+        url: "/user_comments",
+        params: {
+          pageIndex: this.pageIndex,
+          pageSize: this.pageSize,
+        },
+      }).then((res) => {
+        if (res.status === 200) {
+          const { data } = res.data;
+          this.commentList = [...this.commentList, ...data];
+          this.loading = false;
+          if (data.length < this.pageSize) {
+            this.finished = true;
+          }
+        }
+      });
+    },
+  },
   created() {
-    this.$axios({
-      url: "/user_comments",
-    }).then((res) => {
-      console.log(res);
-      if (res.status === 200) {
-        const { data } = res.data;
-        this.commentList = data;
-      }
-    });
+    this.loadComment();
   },
 };
 </script>

@@ -22,7 +22,6 @@ export default {
   props: ["parentData"],
   methods: {
     sendCommment() {
-      console.log(this.parentData);
       eventBus.$emit("textMsg", this.parentData.id);
     },
   },

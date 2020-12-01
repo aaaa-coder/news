@@ -49,8 +49,6 @@ export default {
     },
     //发评论
     sendComment() {
-      console.log(this.parentId);
-      console.log(this.$route.query.postId);
       this.$axios({
         method: "post",
         url: "/post_comment/" + this.$route.query.postId,
@@ -63,7 +61,6 @@ export default {
           this.$toast.success(res.data.message);
           this.commentContent = "";
           this.$emit("reloadComment");
-          console.log(res);
         }
       });
     },

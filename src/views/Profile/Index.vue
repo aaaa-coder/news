@@ -75,7 +75,6 @@ export default {
         method: "get",
         url: "/user/" + localStorage.getItem("userId"),
       }).then((res) => {
-        // console.log(res);
         if (res.status === 200) {
           const { data, message } = res.data;
           if (message == "获取成功") {
