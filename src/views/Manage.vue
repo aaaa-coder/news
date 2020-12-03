@@ -58,8 +58,12 @@ export default {
   },
   methods: {
     deleteItem(index) {
-      this.deactiveList.push(this.activeList[index]);
-      this.activeList.splice(index, 1);
+      if (this.activeList.length > 1) {
+        this.deactiveList.push(this.activeList[index]);
+        this.activeList.splice(index, 1);
+      } else {
+        this.$toast("再删就出事了哦");
+      }
     },
     addItem(index) {
       this.activeList.push(this.deactiveList[index]);
