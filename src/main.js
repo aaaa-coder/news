@@ -12,8 +12,8 @@ Vue.use(Vant);
 import { Uploader } from 'vant';
 Vue.use(Uploader);
 //添加axios基地址
-// axios.defaults.baseURL = "http://liangwei.tech:3000";
-axios.defaults.baseURL = "http://157.122.54.189:9083";
+axios.defaults.baseURL = "http://liangwei.tech:3000";
+// axios.defaults.baseURL = "http://157.122.54.189:9083";
 //添加axios请求拦截器
 axios.interceptors.request.use(config => {
   if (!config.headers.Authorization && localStorage.getItem('token')) {

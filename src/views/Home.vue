@@ -74,19 +74,21 @@ export default {
           pageIndex: currentCategory.pageIndex,
           pageSize: currentCategory.pageSize,
         },
-      }).then((res) => {
-        if (res.status === 200) {
-          const { data } = res.data;
-          //进行结构，将原数据与请求的数据进行拼接，而不是替代
-          currentCategory.postList = [...currentCategory.postList, ...data];
-          //加载一页后，将loading变为false，不然加载一页后会卡在loading=true而无法进行加载其他页
-          currentCategory.loading = false;
-          //加载完毕后将finished改为true
-          if (data.length < currentCategory.pageSize) {
-            currentCategory.finished = true;
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            const { data } = res.data;
+            //进行结构，将原数据与请求的数据进行拼接，而不是替代
+            currentCategory.postList = [...currentCategory.postList, ...data];
+            //加载一页后，将loading变为false，不然加载一页后会卡在loading=true而无法进行加载其他页
+            currentCategory.loading = false;
+            //加载完毕后将finished改为true
+            if (data.length < currentCategory.pageSize) {
+              currentCategory.finished = true;
+            }
           }
-        }
-      });
+        })
+        .catch(() => {});
     },
     //获取分栏列表
     loadCategoryList() {
@@ -105,16 +107,25 @@ export default {
               finished: false,
             };
           });
+          this.categoryList.push({ name: "+" });
           this.loadPostList();
+          console.log(this.categoryList);
         }
       });
     },
   },
   mounted() {
+    // this.categoryList.push({ name: "+" });
     this.loadCategoryList();
   },
 };
 </script>
 
 <style lang="less" scoped>
+/deep/ .van-tab:nth-last-child(2) {
+  position: sticky;
+  right: -8px;
+  background-color: #fff;
+  width: 44px;
+}
 </style>
