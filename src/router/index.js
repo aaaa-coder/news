@@ -19,6 +19,7 @@ import Favorite from "../views/Profile/Favorite.vue"
 import PostDetail from "../views/PostDetail.vue"
 import UserComment from "../views/UserComment.vue"
 import MyComment from "../views/Profile/MyComment.vue"
+import Manage from "../views/Manage.vue"
 
 
 
@@ -124,7 +125,10 @@ const routes = [
     component: MyComment,
     meta: {
       needAuth: true
-    }
+    },
+  }, {
+    path: '/manage',
+    component: Manage
   }
 ]
 

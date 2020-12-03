@@ -48,11 +48,15 @@ export default {
     PostItem,
   },
   watch: {
-    activeCategoryIndex() {
+    activeCategoryIndex(newVal) {
       const currentCategory = this.categoryList[this.activeCategoryIndex];
-      //如果没文章才加载
-      if (currentCategory.postList.length == 0) {
-        this.loadPostList();
+      if (newVal == this.categoryList.length - 1) {
+        this.$router.push("/manage");
+      } else {
+        if (currentCategory.postList.length == 0) {
+          //如果没文章才加载
+          this.loadPostList();
+        }
       }
     },
   },
@@ -109,13 +113,13 @@ export default {
           });
           this.categoryList.push({ name: "+" });
           this.loadPostList();
-          console.log(this.categoryList);
         }
       });
     },
   },
   mounted() {
     // this.categoryList.push({ name: "+" });
+
     this.loadCategoryList();
   },
 };
