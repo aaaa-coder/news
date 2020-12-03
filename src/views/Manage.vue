@@ -58,13 +58,13 @@ export default {
   },
   methods: {
     deleteItem(index) {
-      if (this.activeList.length > 1) {
-        this.deactiveList.push(this.activeList[index]);
-        this.activeList.splice(index, 1);
-      } else {
-        this.$toast("再删就出事了哦");
+      this.deactiveList.push(this.activeList[index]);
+      this.activeList.splice(index, 1);
+      if (this.activeList.length == 1) {
+        this.$toast("这是最后一个了哦，删了会变为推荐栏目");
       }
     },
+
     addItem(index) {
       this.activeList.push(this.deactiveList[index]);
       this.deactiveList.splice(index, 1);
