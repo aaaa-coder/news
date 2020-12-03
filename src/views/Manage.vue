@@ -39,15 +39,22 @@ export default {
     };
   },
   created() {
-    this.$axios({
-      url: "/category",
-    }).then((res) => {
-      if (res.status === 200) {
-        console.log(res);
-        const { data } = res.data;
-        this.activeList = data;
+    if (localStorage.getItem("activeList")) {
+      this.activeList = JSON.parse(localStorage.getItem("activeList"));
+      if (localStorage.getItem("deactiveList")) {
+        this.deactiveList = JSON.parse(localStorage.getItem("deactiveList"));
       }
-    });
+    } else {
+      this.$axios({
+        url: "/category",
+      }).then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          const { data } = res.data;
+          this.activeList = data;
+        }
+      });
+    }
   },
   methods: {
     deleteItem(index) {
@@ -57,6 +64,14 @@ export default {
     addItem(index) {
       this.activeList.push(this.deactiveList[index]);
       this.deactiveList.splice(index, 1);
+    },
+  },
+  watch: {
+    activeList() {
+      localStorage.setItem("activeList", JSON.stringify(this.activeList));
+    },
+    deactiveList() {
+      localStorage.setItem("deactiveList", JSON.stringify(this.deactiveList));
     },
   },
 };
