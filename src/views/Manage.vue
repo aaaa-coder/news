@@ -8,6 +8,7 @@
           class="item"
           v-for="(active, index) in activeList"
           :key="active.index"
+          @click="deleteItem(index)"
           >{{ active.name }}</span
         >
       </div>
@@ -19,6 +20,7 @@
           class="item"
           v-for="(deactive, index) in deactiveList"
           :key="deactive.index"
+          @click="addItem(index)"
           >{{ deactive.name }}</span
         >
       </div>
@@ -46,6 +48,16 @@ export default {
         this.activeList = data;
       }
     });
+  },
+  methods: {
+    deleteItem(index) {
+      this.deactiveList.push(this.activeList[index]);
+      this.activeList.splice(index, 1);
+    },
+    addItem(index) {
+      this.activeList.push(this.deactiveList[index]);
+      this.deactiveList.splice(index, 1);
+    },
   },
 };
 </script>
