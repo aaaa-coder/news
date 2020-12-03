@@ -100,27 +100,34 @@ export default {
         url: "/category",
       }).then((res) => {
         if (res.status === 200) {
-          const { data } = res.data;
-          this.categoryList = data.map((item) => {
-            return {
-              ...item,
-              postList: [],
-              pageIndex: 1,
-              pageSize: 5,
-              loading: false,
-              finished: false,
-            };
-          });
-          this.categoryList.push({ name: "+" });
-          this.loadPostList();
         }
       });
     },
   },
   mounted() {
     // this.categoryList.push({ name: "+" });
-
-    this.loadCategoryList();
+    if (localStorage.getItem("activeList")) {
+      const res = {
+        data: {
+          data: JSON.parse(localStorage.getItem("activeList")),
+        },
+      };
+      const { data } = res.data;
+      this.categoryList = data.map((item) => {
+        return {
+          ...item,
+          postList: [],
+          pageIndex: 1,
+          pageSize: 5,
+          loading: false,
+          finished: false,
+        };
+      });
+      this.categoryList.push({ name: "+" });
+      this.loadPostList();
+    } else {
+      this.loadCategoryList();
+    }
   },
 };
 </script>
