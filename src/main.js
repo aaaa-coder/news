@@ -1,19 +1,26 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import Login from './views/Login.vue'
 //引入axios
 import axios from "./utils/axios";
 //引入vant ui
-import Vant, { Toast } from 'vant';
-import 'vant/lib/index.css';
-Vue.use(Vant);
-//引入uploader
-import { Uploader } from 'vant';
+import { ActionSheet, Dialog, Field, List, Tab, Tabs, Uploader } from 'vant';
+import "vant/lib/tabs/index.css"
+import "vant/lib/tab/index.css"
+import "vant/lib/list/index.css"
+import "vant/lib/uploader/index.css"
+import "vant/lib/dialog/index.css"
+import "vant/lib/field/index.css"
+import "vant/lib/action-sheet/index.css"
+
+
+Vue.use(ActionSheet);
+Vue.use(Dialog);
+Vue.use(Field);
+Vue.use(List);
+Vue.use(Tab);
+Vue.use(Tabs);
 Vue.use(Uploader);
-
-
-
 
 
 Vue.filter('setImgUrl', (objUrl) => {
